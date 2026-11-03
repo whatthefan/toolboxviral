@@ -6,3 +6,9 @@ https://:project.pages.dev/*
 
 https://:version.:project.pages.dev/*
   X-Robots-Tag: noindex
+
+# El recortador de fondos: archivos que no cambian, se guardan en el navegador
+/models/*
+  Cache-Control: public, max-age=31536000, immutable
+/ort/*
+  Cache-Control: public, max-age=31536000, immutable

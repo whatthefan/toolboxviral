@@ -6,18 +6,50 @@ const MEAN = [0.485, 0.456, 0.406]
 const STD = [0.229, 0.224, 0.225]
 
 let ready = null
+const listeners = new Set()
+const loaded = { model: 0, wasm: 0 }
+const SIZES = { model: 4574861, wasm: 11210254 } // tamaño ya descomprimido, para la barra de progreso
 
-/** Prepara el motor y el modelo (solo una vez). */
+/** Avisa del progreso de la preparación (0 a 100). Devuelve la función para dejar de escuchar. */
+export function onProgress(fn) {
+  listeners.add(fn)
+  return () => listeners.delete(fn)
+}
+
+/** Descarga un archivo contando los bytes que llegan. */
+async function download(url, key) {
+  const res = await fetch(url)
+  if (!res.ok || !res.body) throw new Error(`${url}: ${res.status}`)
+  const reader = res.body.getReader()
+  const parts = []
+  for (;;) {
+    const { done, value } = await reader.read()
+    if (done) break
+    parts.push(value)
+    loaded[key] += value.length
+    const pct = Math.min(99, Math.round(((loaded.model + loaded.wasm) / (SIZES.model + SIZES.wasm)) * 100))
+    listeners.forEach((fn) => fn(pct))
+  }
+  return new Blob(parts).arrayBuffer()
+}
+
+/** Prepara el motor y el modelo (solo una vez). Los dos archivos se descargan a la vez. */
 export function prepare() {
   if (!ready) {
     ready = (async () => {
-      const ort = await import('onnxruntime-web/wasm')
+      const [ort, wasm, model] = await Promise.all([
+        import('onnxruntime-web/wasm'),
+        download('/ort/ort-wasm-simd-threaded.wasm', 'wasm'),
+        download('/models/u2netp.onnx', 'model'),
+      ])
       ort.env.wasm.wasmPaths = '/ort/'
+      ort.env.wasm.wasmBinary = wasm
       ort.env.wasm.numThreads = 1
-      const session = await ort.InferenceSession.create('/models/u2netp.onnx', { executionProviders: ['wasm'], graphOptimizationLevel: 'all' })
+      const session = await ort.InferenceSession.create(new Uint8Array(model), { executionProviders: ['wasm'], graphOptimizationLevel: 'all' })
+      listeners.forEach((fn) => fn(100))
       return { ort, session }
     })()
-    ready.catch(() => { ready = null })
+    ready.catch(() => { ready = null; loaded.model = loaded.wasm = 0 })
   }
   return ready
 }

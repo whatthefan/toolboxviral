@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Dropzone from './Dropzone.jsx'
 import Button from './Button.jsx'
-import { prepare, removeBackground } from '../../lib/cutout.js'
+import { onProgress, prepare, removeBackground } from '../../lib/cutout.js'
 
 const BACKGROUNDS = [
   { id: 'transparent', label: 'Transparente' },
@@ -21,10 +21,10 @@ export default function BackgroundRemover() {
 
   // El recortador se prepara en cuanto se abre la página, para que el recorte sea inmediato
   useEffect(() => {
-    const start = () => prepare().catch(() => {})
-    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 1200 })
-    else setTimeout(start, 400)
+    prepare().catch(() => {})
   }, [])
+  // Si se sube la foto antes de que esté listo, se enseña cuánto falta
+  useEffect(() => onProgress((pct) => setProgress((p) => (p.label.startsWith('Preparando') ? { label: `Preparando… ${pct} %`, pct } : p))), [])
 
   // Libera la memoria de las imágenes anteriores
   useEffect(() => () => original && URL.revokeObjectURL(original), [original])
@@ -37,7 +37,10 @@ export default function BackgroundRemover() {
     setResult(null)
     setSplit(50)
     setStatus('working')
-    setProgress({ label: 'Quitando el fondo…', pct: null })
+    let listo = false
+    prepare().then(() => { listo = true; if (id === run.current) setProgress({ label: 'Quitando el fondo…', pct: null }) }).catch(() => {})
+    await Promise.resolve()
+    setProgress(listo ? { label: 'Quitando el fondo…', pct: null } : { label: 'Preparando…', pct: null })
     try {
       const blob = await removeBackground(f)
       if (id !== run.current) return
