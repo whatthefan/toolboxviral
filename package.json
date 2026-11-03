@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "postbuild": "node -e \"const fs=require('fs');for(const f of fs.readdirSync('dist/_astro'))if(f.endsWith('.wasm'))fs.rmSync('dist/_astro/'+f)\"",
     "preview": "astro preview"
   },
   "dependencies": {
@@ -17,7 +18,7 @@
     "astro": "^5.12.0",
     "heic2any": "0.0.4",
     "lucide-static": "^1.66.0",
-    "onnxruntime-web": "1.22.0",
+    "onnxruntime-web": "1.30.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.0"

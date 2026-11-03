@@ -1,6 +1,6 @@
 # Cloudflare Pages: la dirección gratuita *.pages.dev no se indexa en Google.
 # Así puedes publicar y probar la web antes de comprar el dominio, y cuando conectes
-# cifraclara.es solo se indexará el dominio (sin contenido duplicado).
+# toolboxviral.com solo se indexará el dominio (sin contenido duplicado).
 https://:project.pages.dev/*
   X-Robots-Tag: noindex
 

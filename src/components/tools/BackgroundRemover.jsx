@@ -55,8 +55,9 @@ export default function BackgroundRemover() {
   const frame = useRef(0)
 
   // El recortador se prepara en cuanto se abre la página, para que el recorte sea inmediato
+  // (salvo con el ahorro de datos activado: entonces se descarga al elegir la foto)
   useEffect(() => {
-    prepare().catch(() => {})
+    if (!navigator.connection?.saveData) prepare().catch(() => {})
   }, [])
   // Si se sube la foto antes de que esté listo, se enseña cuánto falta
   useEffect(() => onProgress((pct) => setProgress((p) => (p.label.startsWith('Preparando') ? { label: `Preparando… ${pct} %`, pct } : p))), [])
