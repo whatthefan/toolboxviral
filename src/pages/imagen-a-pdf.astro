@@ -1,0 +1,32 @@
+---
+import ToolPage from '../layouts/ToolPage.astro'
+import ImagenAPdf from '../components/tools/ImagenAPdf.jsx'
+
+const faq = [
+  ['¿Cómo convierto varias fotos en un solo PDF?', 'Arrastra todas las imágenes al recuadro, ordénalas con las flechas y pulsa «Crear y descargar el PDF». Cada imagen será una página.'],
+  ['¿Se suben mis fotos o documentos a internet?', 'No. El PDF se crea en tu propio navegador, así que tus imágenes no salen de tu dispositivo. Por eso puedes usarlo con DNI, contratos o recibos.'],
+  ['¿Funciona con fotos del iPhone (HEIC)?', 'Sí. Las fotos HEIC se convierten automáticamente antes de añadirlas al PDF.'],
+  ['¿Qué tamaño de página elijo?', 'A4 si vas a imprimir o enviar el PDF como documento. «Igual que cada imagen» si quieres que cada página tenga justo el tamaño de la foto, sin bordes.'],
+  ['¿Tiene límite o marca de agua?', 'No. Es gratis, sin registro y sin marca de agua. Puedes añadir hasta 50 imágenes a la vez.'],
+]
+---
+<ToolPage
+  title="Convertir imagen a PDF gratis: JPG, PNG y fotos a PDF – ToolBoxViral"
+  description="Convierte imágenes JPG, PNG, WebP o fotos del iPhone a PDF gratis. Une varias en un solo PDF, ordénalas y descárgalo al momento, sin subir tus archivos."
+  h1="Convertir imagen a PDF"
+  intro="Une una o varias fotos en un PDF en segundos. Ordena las páginas, elige A4 o el tamaño de la foto y descárgalo, sin subir nada a internet."
+  faq={faq}
+>
+  <ImagenAPdf slot="calc" client:only="react" />
+
+  <h2>Cómo pasar una imagen a PDF</h2>
+  <ol>
+    <li>Arrastra tus imágenes al recuadro, elígelas o pégalas con Ctrl+V.</li>
+    <li>Ordénalas con las flechas y quita las que no quieras.</li>
+    <li>Elige el tamaño de página y los márgenes.</li>
+    <li>Pulsa «Crear y descargar el PDF».</li>
+  </ol>
+  <h2>Para qué sirve</h2>
+  <p>Para enviar en un solo archivo las fotos de un documento (DNI, contrato, recibos, apuntes), presentar un trabajo o mandar varias imágenes por email sin adjuntarlas una a una.</p>
+  <p>Si tus fotos pesan mucho, el PDF también: redúcelas antes con el <a href="/convertir-imagen">conversor de imágenes</a>.</p>
+</ToolPage>

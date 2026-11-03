@@ -1,6 +1,7 @@
 ---
 import ToolPage from '../layouts/ToolPage.astro'
 import ImageConverter from '../components/tools/ImageConverter.jsx'
+import { CONVERSIONES } from '../lib/conversiones.js'
 
 const faq = [
   ['¿Cómo paso una foto HEIC del iPhone a JPG?', 'Arrástrala al recuadro y elige JPG. Se convierte en tu navegador; puedes subir varias a la vez y descargarlas todas.'],
@@ -37,4 +38,7 @@ const faq = [
   </table>
   <h2>Cuánto reducir una foto</h2>
   <p>Una foto de móvil ocupa entre 2 y 6 MB. Para enviarla o publicarla en una web basta con <strong>1920 px</strong> de lado y calidad del 80 %: suele quedarse por debajo de 400 KB sin diferencia visible. Para redes sociales, 1080 px es el tamaño que usan Instagram y TikTok.</p>
+
+  <h2>Conversiones más buscadas</h2>
+  <p>{CONVERSIONES.map((x, i) => <>{i > 0 && ' · '}<a href={`/convertir/${x.slug}`}>{x.de} a {x.a}</a></>)}</p>
 </ToolPage>

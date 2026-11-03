@@ -1,0 +1,37 @@
+---
+import ToolPage from '../../layouts/ToolPage.astro'
+import ImageConverter from '../../components/tools/ImageConverter.jsx'
+import { CONVERSIONES } from '../../lib/conversiones.js'
+
+export function getStaticPaths() {
+  return CONVERSIONES.map((c) => ({ params: { slug: c.slug }, props: { c } }))
+}
+const { c } = Astro.props
+const faq = [
+  ...c.faq,
+  [`¿Puedo convertir varias imágenes ${c.de} a la vez?`, `Sí, hasta 30 de golpe. Arrástralas todas y pulsa «Descargar todas».`],
+  ['¿Se suben mis fotos a algún servidor?', 'No. La conversión se hace en tu propio navegador, así que tus fotos no salen de tu dispositivo.'],
+]
+const otras = CONVERSIONES.filter((x) => x.slug !== c.slug)
+---
+<ToolPage
+  ruta="/convertir-imagen"
+  title={`Convertir ${c.de} a ${c.a} gratis, ${c.formato === 'png' ? 'sin perder calidad' : 'en alta calidad'} – ToolBoxViral`}
+  description={`Pasa tus imágenes de ${c.de} a ${c.a} gratis y al momento, varias a la vez y sin subirlas a ningún servidor. Elige la calidad y el tamaño.`}
+  h1={`Convertir ${c.de} a ${c.a}`}
+  intro={`Arrastra tus imágenes ${c.de} y descárgalas en ${c.a} al momento. Gratis, sin registro y sin subir tus fotos a internet.`}
+  faq={faq}
+>
+  <ImageConverter slot="calc" client:only="react" formato={c.formato} />
+
+  <h2>Por qué pasar de {c.de} a {c.a}</h2>
+  <p>{c.porque}</p>
+  <h2>Cómo convertir {c.de} a {c.a}</h2>
+  <ol>
+    <li>Arrastra tus archivos {c.de} al recuadro, elígelos o pégalos con Ctrl+V.</li>
+    <li>Deja marcado {c.a}{c.formato !== 'png' ? ' y ajusta la calidad (80 % va bien para casi todo)' : ''}.</li>
+    <li>Descarga cada imagen o todas a la vez.</li>
+  </ol>
+  <h2>Otras conversiones</h2>
+  <p>{otras.map((x, i) => <>{i > 0 && ' · '}<a href={`/convertir/${x.slug}`}>{x.de} a {x.a}</a></>)}</p>
+</ToolPage>

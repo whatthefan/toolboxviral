@@ -46,9 +46,10 @@ async function convert(file, { format, quality, maxSide }) {
   return { blob, w, h, url: URL.createObjectURL(blob), name: `${file.name.replace(/\.[^.]+$/, '')}.${format}` }
 }
 
-export default function ImageConverter() {
+/** formato: formato de salida con el que se abre (las páginas de cada conversión lo ponen ya). */
+export default function ImageConverter({ formato = 'jpg' }) {
   const [files, setFiles] = useState([])
-  const [format, setFormat] = useState('jpg')
+  const [format, setFormat] = useState(formato)
   const [quality, setQuality] = useState(82)
   const [maxSide, setMaxSide] = useState('0')
   const [items, setItems] = useState([])

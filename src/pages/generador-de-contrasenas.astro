@@ -1,0 +1,26 @@
+---
+import ToolPage from '../layouts/ToolPage.astro'
+import Contrasenas from '../components/tools/Contrasenas.jsx'
+
+const faq = [
+  ['¿Es seguro generar contraseñas aquí?', 'Sí. Se crean en tu dispositivo con el generador aleatorio criptográfico del navegador (el mismo que usan los gestores de contraseñas). No se guardan ni se envían a ningún sitio.'],
+  ['¿Qué longitud debe tener una contraseña segura?', 'Al menos 12 caracteres mezclando mayúsculas, minúsculas, números y símbolos. Con 16 o más es muy difícil de adivinar por fuerza bruta.'],
+  ['¿Cómo recuerdo tantas contraseñas?', 'Usa un gestor de contraseñas (Bitwarden, 1Password, el de Apple o el de Google) y una contraseña distinta para cada web. Activa también la verificación en dos pasos.'],
+]
+---
+<ToolPage
+  title="Generador de contraseñas seguras gratis – ToolBoxViral"
+  description="Genera contraseñas seguras y aleatorias al instante: elige la longitud, mayúsculas, números y símbolos. Se crean en tu dispositivo y no se guardan."
+  h1="Generador de contraseñas seguras"
+  intro="Crea una contraseña aleatoria y difícil de adivinar en un clic. Elige la longitud y los caracteres, y cópiala."
+  faq={faq}
+>
+  <Contrasenas slot="calc" client:only="react" />
+
+  <h2>Qué hace segura una contraseña</h2>
+  <ul>
+    <li><strong>La longitud</strong>: cada carácter de más multiplica las combinaciones posibles.</li>
+    <li><strong>Que sea aleatoria</strong>: nada de nombres, fechas ni palabras del diccionario.</li>
+    <li><strong>Que sea única</strong>: si una web sufre una filtración, las demás cuentas siguen a salvo.</li>
+  </ul>
+</ToolPage>

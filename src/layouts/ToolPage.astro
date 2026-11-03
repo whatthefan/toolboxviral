@@ -4,11 +4,12 @@ import AdSlot from '../components/AdSlot.astro'
 import Icon from '../components/Icon.astro'
 import { TOOLS, CATEGORIAS, ADSENSE, photo } from '../config.js'
 
-const { title, description, h1, intro, faq = [], updated = 'Gratis, sin marca de agua' } = Astro.props
+const { title, description, h1, intro, faq = [], updated = 'Gratis, sin marca de agua', ruta } = Astro.props
 const sidebar = (ADSENSE.client && ADSENSE.slots.sidebar) || import.meta.env.DEV
 const here = Astro.url.pathname.replace(/(index)?\.html$/, '') || '/'
-const actual = TOOLS.find((c) => c.path === here)
-const others = TOOLS.filter((c) => c.path !== here).sort((a, b) => (b.cat === actual?.cat) - (a.cat === actual?.cat)).slice(0, 3)
+// Las páginas de cada conversión (HEIC a JPG…) dicen a qué herramienta pertenecen con `ruta`
+const actual = TOOLS.find((c) => c.path === (ruta ?? here))
+const others = TOOLS.filter((c) => c.path !== actual?.path && c.path !== here).sort((a, b) => (b.cat === actual?.cat) - (a.cat === actual?.cat)).slice(0, 3)
 const schema = [
   {
     '@context': 'https://schema.org',
@@ -32,7 +33,7 @@ const width = sidebar ? 'max-w-6xl' : 'max-w-4xl'
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
 
   <section class="hero relative isolate overflow-hidden text-white">
-    <div class="absolute inset-0 -z-10 overflow-hidden"><img src={photo(here)} alt="" class="hero-img absolute inset-0 h-full w-full object-cover" fetchpriority="high" /></div>
+    <div class="absolute inset-0 -z-10 overflow-hidden"><img src={photo(actual?.path ?? here)} alt="" class="hero-img absolute inset-0 h-full w-full object-cover" fetchpriority="high" /></div>
     <div class="mist" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-950/95 via-brand-950/85 to-brand-950/55"></div>
     <div class:list={['mx-auto px-4 pt-5 pb-20 sm:pt-7 sm:pb-24', width]}>

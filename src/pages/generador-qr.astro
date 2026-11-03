@@ -1,0 +1,27 @@
+---
+import ToolPage from '../layouts/ToolPage.astro'
+import GeneradorQr from '../components/tools/GeneradorQr.jsx'
+
+const faq = [
+  ['¿El código QR caduca?', 'No. Es un QR estático: lleva el enlace o el texto dentro y funcionará siempre, sin depender de esta web ni de ninguna suscripción.'],
+  ['¿Cómo hago un QR para mi WiFi?', 'Elige «WiFi», escribe el nombre de la red y la contraseña. Al escanearlo, el móvil se conecta sin tener que teclear la clave.'],
+  ['¿Puedo usarlo en mi negocio o imprimirlo?', 'Sí, es gratis también para uso comercial y sin marca de agua. Descárgalo en SVG si lo vas a imprimir grande: no pierde calidad.'],
+  ['¿Por qué mi QR no se lee?', 'Usa un color oscuro sobre fondo blanco, no lo imprimas demasiado pequeño (al menos 2 × 2 cm) y deja un borde blanco alrededor.'],
+]
+---
+<ToolPage
+  title="Generador de códigos QR gratis: enlace, WiFi y texto – ToolBoxViral"
+  description="Crea códigos QR gratis para un enlace, tu red WiFi, un email o un teléfono. Sin caducidad, sin marca de agua y descarga en PNG o SVG."
+  h1="Generador de códigos QR"
+  intro="Crea un código QR para tu web, tu Instagram, tu WiFi o tu teléfono y descárgalo en alta calidad. Gratis y para siempre."
+  faq={faq}
+>
+  <GeneradorQr slot="calc" client:only="react" />
+
+  <h2>Ideas para usar un código QR</h2>
+  <ul>
+    <li>En la puerta o la mesa de tu negocio, con el enlace a tu carta, tus reseñas o tu Instagram.</li>
+    <li>En casa, para que las visitas se conecten al WiFi sin dictar la contraseña.</li>
+    <li>En tarjetas de visita, carteles y folletos.</li>
+  </ul>
+</ToolPage>
