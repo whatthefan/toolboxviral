@@ -11,7 +11,7 @@ export const SITE = {
 }
 
 export const ADSENSE = {
-  client: import.meta.env.PUBLIC_ADSENSE_CLIENT || '',
+  client: import.meta.env.PUBLIC_ADSENSE_CLIENT || 'ca-pub-6537533170373373',
   slots: {
     top: import.meta.env.PUBLIC_AD_SLOT_TOP || '',
     content: import.meta.env.PUBLIC_AD_SLOT_CONTENT || '',
