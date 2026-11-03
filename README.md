@@ -5,7 +5,7 @@ Astro 5 + React 19 (solo en las herramientas) + Tailwind CSS 4. Todo se procesa 
 
 | Herramienta | Ruta | Cómo funciona |
 |---|---|---|
-| Quitar fondo | `/quitar-fondo` | IA en el navegador (`@imgly/background-removal`) |
+| Quitar fondo | `/quitar-fondo` | Modelo U²-Net pequeño (`public/models/u2netp.onnx`) con onnxruntime-web, en el navegador |
 | Convertir y comprimir | `/convertir-imagen` | Canvas: HEIC (con `heic2any`), JPG, PNG, WebP; varias a la vez |
 | Tamaños para redes | `/redimensionar-imagen` | Canvas: Reels, TikTok, Instagram, YouTube, X, LinkedIn |
 | Detector de IA | `/detector-de-ia` | Recuento, legibilidad Fernández-Huerta, clichés y ritmo |
@@ -22,10 +22,10 @@ npm run dev
 Igual que las otras webs: Cloudflare Pages conectado al repositorio, comando `npm run build`, carpeta `dist`.
 `public/_headers` evita que se indexe la dirección *.pages.dev.
 
-## Licencia de «Quitar fondo»
+## Licencias
 
-`@imgly/background-removal` tiene licencia **AGPL-3.0**: para usarla gratis en una web pública, el código de la web
-debe ser público (repositorio público). Si no, hay que comprar la licencia comercial de IMG.LY o quitar esa herramienta.
+El recortador usa el modelo U²-Net pequeño (Apache 2.0) y onnxruntime-web (MIT), alojados en `public/models` y `public/ort`.
+Ninguna obliga a que el repositorio sea público.
 
 ## AdSense
 

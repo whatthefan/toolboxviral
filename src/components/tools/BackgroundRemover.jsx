@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Dropzone from './Dropzone.jsx'
 import Button from './Button.jsx'
+import { prepare, removeBackground } from '../../lib/cutout.js'
 
 const BACKGROUNDS = [
   { id: 'transparent', label: 'Transparente' },
@@ -18,6 +19,13 @@ export default function BackgroundRemover() {
   const [split, setSplit] = useState(50)
   const run = useRef(0)
 
+  // El recortador se prepara en cuanto se abre la página, para que el recorte sea inmediato
+  useEffect(() => {
+    const start = () => prepare().catch(() => {})
+    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 1200 })
+    else setTimeout(start, 400)
+  }, [])
+
   // Libera la memoria de las imágenes anteriores
   useEffect(() => () => original && URL.revokeObjectURL(original), [original])
   useEffect(() => () => result && URL.revokeObjectURL(result), [result])
@@ -29,18 +37,9 @@ export default function BackgroundRemover() {
     setResult(null)
     setSplit(50)
     setStatus('working')
-    setProgress({ label: 'Preparando la IA…', pct: null })
+    setProgress({ label: 'Quitando el fondo…', pct: null })
     try {
-      const { removeBackground } = await import('@imgly/background-removal')
-      const blob = await removeBackground(f, {
-        progress: (key, current, total) => {
-          if (id !== run.current) return
-          const pct = total ? Math.round((current / total) * 100) : null
-          setProgress(key.startsWith('fetch')
-            ? { label: 'Descargando el modelo de IA (solo la primera vez)…', pct }
-            : { label: 'Eliminando el fondo…', pct })
-        },
-      })
+      const blob = await removeBackground(f)
       if (id !== run.current) return
       setResult(URL.createObjectURL(blob))
       setStatus('done')
