@@ -1,0 +1,139 @@
+/* Movimiento inmersivo compartido por las cuatro webs (inspirado en webs de scroll cinematográfico).
+   Todo es decorativo: sin JS o con «reducir movimiento» la página se ve igual, solo que quieta. */
+
+:root { --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* Cabecera con foto: zoom de entrada, parallax al hacer scroll y niebla */
+.hero { --hp: 0; }
+.hero-img {
+  transform-origin: 60% 40%;
+  scale: calc(1.04 + var(--hp) * 0.12);
+  translate: 0 calc(var(--hp) * 14%);
+  animation: hero-zoom 2.6s var(--ease-out-expo) both;
+  will-change: transform, scale, translate;
+}
+@keyframes hero-zoom {
+  from { transform: scale(1.16); filter: blur(10px) brightness(0.6); }
+  to { transform: none; filter: none; }
+}
+.hero > div:not(.mist):not(.absolute) {
+  translate: 0 calc(var(--hp) * -60px);
+  opacity: calc(1 - var(--hp) * 0.9);
+}
+.hero h1 { animation: title-in 1.5s var(--ease-out-expo) 0.15s both; }
+.hero h1 + p, .hero h1 ~ * { animation: rise-in 1.2s var(--ease-out-expo) 0.45s both; }
+@keyframes title-in {
+  from { opacity: 0; filter: blur(14px); letter-spacing: 0.06em; transform: translateY(18px); }
+  to { opacity: 1; filter: none; transform: none; }
+}
+@keyframes rise-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+/* Niebla: manchas de luz que se mueven despacio y suben al hacer scroll */
+.mist { position: absolute; inset: 0; z-index: -5; pointer-events: none; overflow: hidden; translate: 0 calc(var(--hp) * -25%); }
+.mist i {
+  position: absolute;
+  width: 70vmax;
+  height: 30vmax;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.13), transparent);
+  filter: blur(30px);
+  animation: drift 38s ease-in-out infinite alternate;
+}
+.mist i:nth-child(1) { left: -20%; bottom: -12%; }
+.mist i:nth-child(2) { right: -25%; bottom: 8%; animation-duration: 52s; animation-delay: -12s; opacity: 0.8; }
+.mist i:nth-child(3) { left: 25%; top: -18%; animation-duration: 64s; animation-delay: -30s; opacity: 0.5; }
+@keyframes drift { to { transform: translate3d(14vmax, -3vmax, 0) scale(1.15); } }
+.mist::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: min(22%, 110px);
+  background: linear-gradient(to top, var(--color-paper), transparent);
+  opacity: calc(0.55 + var(--hp) * 0.45);
+}
+.dark .mist::after { background: linear-gradient(to top, var(--color-night), transparent); }
+
+/* Barra de progreso de lectura */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  height: 2px;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--sp, 0));
+  background: linear-gradient(90deg, var(--color-brand-400), var(--color-brand-600));
+  pointer-events: none;
+}
+
+/* Al bajar, títulos, tarjetas y bloques entran desde la niebla */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    main :is(h2, a.group, details, .article > p, .article > table, .article > ul, .reveal) {
+      animation: fog-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+    main a.group img {
+      animation: img-drift linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+@keyframes fog-in {
+  from { opacity: 0; transform: translateY(42px); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@keyframes img-drift {
+  from { transform: scale(1.14) translateY(-5%); }
+  to { transform: scale(1.14) translateY(5%); }
+}
+
+/* Cambio de página: fundido con desenfoque */
+::view-transition-old(root) { animation: 0.28s ease-in both page-out; }
+::view-transition-new(root) { animation: 0.5s var(--ease-out-expo) both page-in; }
+@keyframes page-out { to { opacity: 0; filter: blur(6px); } }
+@keyframes page-in { from { opacity: 0; filter: blur(6px); transform: scale(1.01); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-img, .hero h1, .hero h1 ~ *, .mist i { animation: none; }
+  .hero-img, .hero > div:not(.mist):not(.absolute), .mist { translate: none; scale: 1.04; opacity: 1; }
+  .scroll-progress { display: none; }
+}
+
+/* Portada a casi pantalla completa, con indicador de scroll */
+.hero-full { display: flex; min-height: min(92svh, 880px); flex-direction: column; }
+.hero-full > div:not(.mist):not(.absolute):not(.tape) { width: 100%; margin-block: auto; }
+.hero-full::after {
+  content: '';
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  width: 1px;
+  height: 52px;
+  background: linear-gradient(rgb(255 255 255 / 0.85), transparent);
+  transform-origin: top;
+  animation: cue 2.4s var(--ease-out-expo) infinite;
+  opacity: calc(1 - var(--hp) * 3);
+}
+@keyframes cue { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+@media (max-width: 640px) { .hero-full { min-height: auto; } .hero-full::after { display: none; } }
+
+/* Vídeo de la cabecera sobre la foto (aparece al empezar a reproducirse) */
+.hero-video { opacity: 0; transition: opacity 1.6s var(--ease-out-expo); }
+.hero-video.ready { opacity: 1; }
+html.travel .scroll-progress { height: 4px; }
+
+/* Tarjeta de resultado de la cabecera */
+.tilt { transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.6s var(--ease-out-expo); transform-style: preserve-3d; }
+.float-card { animation: card-in 1.2s var(--ease-out-expo) both, floaty 7s ease-in-out 1.2s infinite; }
+.float-card.late { animation-delay: 0.35s, 1.6s; }
+@keyframes card-in { from { opacity: 0; transform: translateY(40px) scale(0.96); filter: blur(8px); } }
+@keyframes floaty { 50% { transform: translateY(-10px); } }
+.ring-seg { animation: ring-in 1.6s var(--ease-out-expo) 0.5s both; }
+@keyframes ring-in { from { stroke-dasharray: 0 999; } }
+.grow-x { transform-origin: left; animation: grow-x 1.4s var(--ease-out-expo) 0.6s both; }
+@keyframes grow-x { from { transform: scaleX(0); } }
+.pop { animation: unit-pop 0.5s var(--ease-out-expo) both; }
+@keyframes unit-pop { from { opacity: 0; transform: translateY(6px) scale(0.4); } }
+@media (prefers-reduced-motion: reduce) { .float-card, .ring-seg, .grow-x, .pop { animation: none; } }

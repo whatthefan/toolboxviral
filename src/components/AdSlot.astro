@@ -1,0 +1,24 @@
+---
+// Hueco de anuncio con altura reservada (evita saltos de página).
+// Con AdSense configurado muestra el anuncio. Sin configurar, no muestra nada en la web
+// publicada y un recuadro de prueba solo en desarrollo (npm run dev).
+import { ADSENSE } from '../config.js'
+const { slot = 'content', minHeight = 250, class: className = '' } = Astro.props
+const slotId = ADSENSE.slots[slot]
+const live = ADSENSE.client && slotId
+const preview = !live && import.meta.env.DEV
+---
+{live && (
+  <aside aria-label="Publicidad" class:list={['mx-auto w-full', className]} style={`min-height:${minHeight}px`}>
+    <p class="mb-1 text-center text-[10px] tracking-widest text-stone-400 uppercase">Publicidad</p>
+    <ins class="adsbygoogle" style={`display:block;min-height:${minHeight - 16}px`} data-ad-client={ADSENSE.client} data-ad-slot={slotId} data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script is:inline>(window.adsbygoogle = window.adsbygoogle || []).push({})</script>
+  </aside>
+)}
+{preview && (
+  <aside aria-label="Publicidad (vista previa)" class:list={['mx-auto w-full', className]} style={`min-height:${minHeight}px`}>
+    <div class="flex h-full items-center justify-center rounded-2xl border border-dashed border-stone-300 text-xs text-stone-400 dark:border-stone-700" style={`min-height:${minHeight}px`}>
+      Anuncio ({slot}) · solo visible en desarrollo
+    </div>
+  </aside>
+)}

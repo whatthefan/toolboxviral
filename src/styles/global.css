@@ -1,0 +1,77 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/plus-jakarta-sans";
+
+@import "./motion.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* Violeta ToolBoxViral */
+  --color-brand-50: #f5f3ff;
+  --color-brand-100: #ede9fe;
+  --color-brand-200: #ddd6fe;
+  --color-brand-300: #c4b5fd;
+  --color-brand-400: #a78bfa;
+  --color-brand-500: #8b5cf6;
+  --color-brand-600: #7c3aed;
+  --color-brand-700: #6d28d9;
+  --color-brand-800: #5b21b6;
+  --color-brand-900: #3b1782;
+  --color-brand-950: #1e0b47;
+
+  /* Fucsia para acentos */
+  --color-gold-300: #f9a8d4;
+  --color-gold-400: #f472b6;
+  --color-gold-500: #ec4899;
+
+  --color-paper: #faf9fc;
+  --color-night: #0d0a17;
+}
+
+html { color-scheme: light; }
+html.dark { color-scheme: dark; }
+body { @apply bg-paper font-sans text-stone-900 antialiased dark:bg-night dark:text-stone-100; }
+::selection { @apply bg-brand-200 text-brand-950; }
+
+/* Papel con retícula muy suave para las cabeceras */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(18 95 64 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(18 95 64 / 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.dark .bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(126 207 168 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(126 207 168 / 0.06) 1px, transparent 1px);
+}
+
+/* Texto de los artículos */
+.article h2 { @apply mt-12 mb-4 font-display text-[1.7rem] leading-tight font-semibold tracking-tight text-stone-900 dark:text-stone-50; }
+.article h3 { @apply mt-8 mb-2 text-lg font-semibold; }
+.article p, .article li { @apply leading-[1.75] text-stone-700 dark:text-stone-300; }
+.article p { @apply mb-4; }
+.article ul, .article ol { @apply mb-5 space-y-1.5 pl-6; }
+.article ul { @apply list-disc marker:text-brand-500; }
+.article ol { @apply list-decimal marker:font-semibold marker:text-brand-600; }
+.article a { @apply font-medium text-brand-700 underline decoration-brand-300 decoration-2 underline-offset-2 hover:decoration-brand-600 dark:text-brand-300; }
+.article table { @apply mb-6 w-full overflow-hidden rounded-2xl text-sm ring-1 ring-stone-200 dark:ring-stone-800; border-collapse: separate; border-spacing: 0; }
+.article th, .article td { @apply border-b border-stone-200 px-3 py-2.5 text-left dark:border-stone-800; }
+.article tr:last-child td { @apply border-b-0; }
+.article th { @apply bg-brand-50 font-semibold text-brand-900 dark:bg-brand-950/60 dark:text-brand-100; }
+.article td { @apply bg-white tabular-nums dark:bg-stone-900/40; }
+.article strong { @apply font-semibold text-stone-900 dark:text-stone-100; }
+
+/* Entrada suave de los resultados */
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.animate-rise { animation: rise 0.35s ease-out both; }
+@media (prefers-reduced-motion: reduce) { .animate-rise { animation: none; } }
+
+/* Transición suave entre páginas (navegadores que la soportan; el resto navega normal) */
+@view-transition { navigation: auto; }
+header { view-transition-name: cabecera; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }

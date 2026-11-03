@@ -1,0 +1,27 @@
+---
+import Legal from '../layouts/Legal.astro'
+import { SITE } from '../config.js'
+const rows = [
+  ['theme (almacenamiento local)', SITE.domain, 'Técnica', 'Recordar si prefieres el modo claro u oscuro', 'Hasta que la borres'],
+  ['FCCDCF, FCNEC', SITE.domain, 'Técnica', 'Guardar tus preferencias de consentimiento (plataforma de Google)', '13 meses'],
+  ['__gads, __gpi, __eoi', 'Google', 'Publicidad', 'Mostrar anuncios, limitar su repetición y medir su rendimiento', 'Hasta 13 meses'],
+  ['IDE, DSID, NID', 'Google', 'Publicidad personalizada', 'Mostrar anuncios según tus intereses (solo con tu consentimiento)', 'Hasta 13 meses'],
+]
+---
+<Legal title="Política de cookies" description="Qué cookies usa ToolBoxViral, para qué sirven y cómo gestionarlas.">
+  <h2>¿Qué son las cookies?</h2>
+  <p>Son pequeños archivos que un sitio web guarda en tu navegador para recordar información sobre tu visita. También usamos el almacenamiento local del navegador, que funciona de forma parecida.</p>
+
+  <h2>Cookies que usamos</h2>
+  <div class="overflow-x-auto">
+    <table>
+      <thead><tr><th>Nombre</th><th>Titular</th><th>Tipo</th><th>Finalidad</th><th>Duración</th></tr></thead>
+      <tbody>{rows.map((r) => <tr>{r.map((c) => <td>{c}</td>)}</tr>)}</tbody>
+    </table>
+  </div>
+  <p>Los nombres y la duración de las cookies de Google pueden cambiar. Lista actualizada: <a href="https://business.safety.google/adscookies/" target="_blank" rel="noopener noreferrer">cookies que usa Google en publicidad</a>.</p>
+
+  <h2>Cómo gestionar tu consentimiento</h2>
+  <p>La primera vez que entras te mostramos un aviso para que aceptes, rechaces o configures las cookies que no son técnicas. Puedes cambiar tu decisión cuando quieras desde el enlace de privacidad del aviso o borrando las cookies de tu navegador.</p>
+  <p>Si rechazas las cookies publicitarias, seguirás viendo anuncios, pero no estarán personalizados.</p>
+</Legal>

@@ -1,0 +1,127 @@
+---
+import Base from './Base.astro'
+import AdSlot from '../components/AdSlot.astro'
+import Icon from '../components/Icon.astro'
+import { TOOLS, CATEGORIAS, ADSENSE, photo } from '../config.js'
+
+const { title, description, h1, intro, faq = [], updated = 'Gratis, sin marca de agua' } = Astro.props
+const sidebar = (ADSENSE.client && ADSENSE.slots.sidebar) || import.meta.env.DEV
+const here = Astro.url.pathname.replace(/(index)?\.html$/, '') || '/'
+const actual = TOOLS.find((c) => c.path === here)
+const others = TOOLS.filter((c) => c.path !== here).sort((a, b) => (b.cat === actual?.cat) - (a.cat === actual?.cat)).slice(0, 3)
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: h1,
+    description,
+    applicationCategory: 'MultimediaApplication',
+    operatingSystem: 'Any',
+    inLanguage: 'es-ES',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  },
+  faq.length && {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+  },
+].filter(Boolean)
+const width = sidebar ? 'max-w-6xl' : 'max-w-4xl'
+---
+<Base title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <section class="hero relative isolate overflow-hidden text-white">
+    <div class="absolute inset-0 -z-10 overflow-hidden"><img src={photo(here)} alt="" class="hero-img absolute inset-0 h-full w-full object-cover" fetchpriority="high" /></div>
+    <div class="mist" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-950/95 via-brand-950/85 to-brand-950/55"></div>
+    <div class:list={['mx-auto px-4 pt-7 pb-24', width]}>
+      <nav aria-label="Ruta" class="flex items-center gap-1.5 text-sm text-brand-100/75">
+        <a href="/" class="hover:text-white">Inicio</a>
+        <Icon name="chevron-right" size={14} />
+        {actual && <a href="/#herramientas" class="hover:text-white">{CATEGORIAS[actual.cat]}</a>}
+      </nav>
+      <h1 class="mt-4 max-w-3xl font-display text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl">{h1}</h1>
+      <p class="mt-3 max-w-2xl text-lg text-brand-100/90">{intro}</p>
+      <p class="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm text-brand-100/80">
+        <span class="inline-flex items-center gap-1.5"><Icon name="badge-check" size={16} class="text-gold-300" />{updated}</span>
+        <span class="inline-flex items-center gap-1.5"><Icon name="lock" size={16} class="text-gold-300" />Sin registro</span>
+        <span class="inline-flex items-center gap-1.5"><Icon name="shield-check" size={16} class="text-gold-300" />Tus archivos no se suben</span>
+      </p>
+    </div>
+  </section>
+
+  <div class:list={['mx-auto px-4', width]}>
+    <div class:list={['grid gap-10', sidebar && 'lg:grid-cols-[minmax(0,1fr)_300px]']}>
+      <div class="min-w-0">
+        <section class="relative -mt-16 rounded-[2rem] border border-stone-900/10 bg-white p-5 shadow-xl shadow-brand-950/10 sm:p-8 dark:border-white/10 dark:bg-stone-900">
+          <slot name="calc" />
+        </section>
+
+        <AdSlot slot="top" minHeight={100} class="mt-8" />
+
+        <details class="group mt-8 rounded-[2rem] border border-stone-900/10 bg-white dark:border-white/10 dark:bg-stone-900/60">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:px-8 [&::-webkit-details-marker]:hidden">
+            <span class="flex items-center gap-3">
+              <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300"><Icon name="book-open" size={20} /></span>
+              <span>
+                <span class="block font-semibold">Cómo funciona</span>
+                <span class="block text-sm text-stone-500 dark:text-stone-400">Paso a paso, formatos y consejos</span>
+              </span>
+            </span>
+            <span class="grid h-9 w-9 place-items-center rounded-full bg-stone-900/5 transition group-open:rotate-180 dark:bg-white/10"><Icon name="chevron-down" size={18} /></span>
+          </summary>
+          <article class="article border-t border-stone-900/10 px-5 pb-6 sm:px-8 dark:border-white/10">
+            <slot />
+          </article>
+        </details>
+
+        {faq.length > 0 && (
+          <section class="mt-10">
+            <h2 class="font-display text-2xl font-semibold tracking-tight">Dudas frecuentes</h2>
+            <div class="mt-4 divide-y divide-stone-900/10 rounded-[2rem] border border-stone-900/10 bg-white dark:divide-white/10 dark:border-white/10 dark:bg-stone-900/60">
+              {faq.map(([q, a]) => (
+                <details class="group px-5 py-4 sm:px-8">
+                  <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium [&::-webkit-details-marker]:hidden">
+                    {q}
+                    <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-50 text-brand-700 transition group-open:rotate-45 dark:bg-brand-950 dark:text-brand-300"><Icon name="plus" size={15} /></span>
+                  </summary>
+                  <p class="mt-2 leading-relaxed text-stone-600 dark:text-stone-300">{a}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <AdSlot slot="content" minHeight={280} class="mt-10" />
+
+        <section class="mt-12">
+          <h2 class="font-display text-2xl font-semibold tracking-tight">Otras herramientas</h2>
+          <div class="mt-5 grid gap-5 sm:grid-cols-3">
+            {others.map((c) => (
+              <a href={c.path} class="group block">
+                <div class="aspect-[3/2] overflow-hidden rounded-2xl bg-brand-100">
+                  <img src={photo(c.path)} alt="" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                </div>
+                <p class="mt-2 font-semibold group-hover:text-brand-700 dark:group-hover:text-brand-300">{c.label}</p>
+                <p class="text-sm text-stone-500 dark:text-stone-400">{c.blurb}</p>
+              </a>
+            ))}
+          </div>
+          <a href="/#herramientas" class="mt-6 inline-flex items-center gap-1.5 font-semibold text-brand-700 dark:text-brand-300">Ver todas las herramientas <Icon name="arrow-right" size={16} /></a>
+        </section>
+
+        <p class="mt-10 flex gap-3 rounded-2xl bg-stone-900/[0.03] p-4 text-xs leading-relaxed text-stone-500 dark:bg-white/5 dark:text-stone-400">
+          <Icon name="info" size={16} class="mt-0.5 shrink-0" />
+          Todo se procesa en tu navegador: tus fotos y textos no se suben a ningún servidor. Los resultados dependen de la calidad del archivo original.
+        </p>
+      </div>
+
+      {sidebar && (
+        <div class="hidden lg:block">
+          <div class="sticky top-24 mt-8"><AdSlot slot="sidebar" minHeight={600} /></div>
+        </div>
+      )}
+    </div>
+  </div>
+</Base>

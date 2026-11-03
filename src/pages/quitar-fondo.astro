@@ -1,0 +1,37 @@
+---
+import ToolPage from '../layouts/ToolPage.astro'
+import BackgroundRemover from '../components/tools/BackgroundRemover.jsx'
+
+const faq = [
+  ['¿Mis fotos se suben a algún servidor?', 'No. El modelo de IA se descarga a tu navegador la primera vez y la imagen se procesa en tu dispositivo. Nadie más la ve.'],
+  ['¿Por qué tarda más la primera vez?', 'Tu navegador descarga el modelo de IA (unas decenas de MB). Después queda guardado y las siguientes imágenes van mucho más rápido.'],
+  ['¿Para qué sirve una imagen con fondo transparente?', 'Para miniaturas de YouTube, fotos de producto, stickers, montajes para Reels o TikTok y presentaciones.'],
+  ['¿Hay límite de imágenes?', 'No. Puedes usarlo tantas veces como quieras, sin registro y sin marca de agua.'],
+  ['¿Funciona con fotos de producto, personas y mascotas?', 'Sí. Funciona mejor cuando el objeto principal está bien enfocado y se distingue del fondo.'],
+]
+---
+<ToolPage
+  title="Quitar fondo de imagen gratis online con IA – ToolBoxViral"
+  description="Elimina el fondo de cualquier foto en segundos con IA. Gratis, sin registro y sin subir tu imagen a ningún servidor. Descarga en PNG transparente."
+  h1="Quitar el fondo de una imagen"
+  intro="Sube una foto y una IA recorta a la persona u objeto principal en segundos. Descárgala en PNG con fondo transparente, blanco o negro."
+  faq={faq}
+>
+  <BackgroundRemover slot="calc" client:only="react" />
+
+  <h2>Cómo quitar el fondo de una imagen</h2>
+  <ol>
+    <li>Arrastra tu foto al recuadro, haz clic para elegirla o pégala con Ctrl+V.</li>
+    <li>Espera unos segundos: la IA detecta a la persona u objeto principal y elimina el resto.</li>
+    <li>Compara el antes y el después con el deslizador y descarga el PNG.</li>
+  </ol>
+  <h2>Consejos para un recorte limpio</h2>
+  <ul>
+    <li>Usa una foto con buena luz y el objeto bien enfocado.</li>
+    <li>Cuanto más contraste haya entre el objeto y el fondo, más fino sale el borde.</li>
+    <li>Para miniaturas de YouTube, recorta la cara y colócala sobre un fondo de color con el <a href="/redimensionar-imagen">redimensionador para redes</a>.</li>
+    <li>Si la foto pesa mucho, primero redúcela con el <a href="/convertir-imagen">conversor de imágenes</a>.</li>
+  </ul>
+  <h2>Formato del resultado</h2>
+  <p>El resultado se descarga en <strong>PNG</strong>, el formato que conserva la transparencia. Si eliges fondo blanco o negro, también sirve para subirlo a tiendas online y marketplaces.</p>
+</ToolPage>

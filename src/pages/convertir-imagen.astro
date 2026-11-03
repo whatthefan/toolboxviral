@@ -1,0 +1,40 @@
+---
+import ToolPage from '../layouts/ToolPage.astro'
+import ImageConverter from '../components/tools/ImageConverter.jsx'
+
+const faq = [
+  ['¿Cómo paso una foto HEIC del iPhone a JPG?', 'Arrástrala al recuadro y elige JPG. Se convierte en tu navegador; puedes subir varias a la vez y descargarlas todas.'],
+  ['¿Qué formato pesa menos?', 'WebP suele pesar entre un 25 % y un 35 % menos que JPG con la misma calidad visual. JPG es el más compatible y PNG es el único sin pérdida y con transparencia.'],
+  ['¿Qué calidad elijo?', 'Entre 75 % y 85 % la diferencia casi no se nota y el archivo pesa mucho menos. Para imprimir, usa 90 % o más.'],
+  ['¿Se suben mis fotos a internet?', 'No. Todas las conversiones se hacen en tu dispositivo. Por eso funciona incluso con fotos privadas.'],
+  ['¿Por qué la imagen convertida pesa más?', 'Pasa al convertir a PNG o al subir la calidad de una foto que ya estaba comprimida. Prueba JPG o WebP con una calidad del 80 %.'],
+]
+---
+<ToolPage
+  title="Convertir HEIC, PNG y WebP a JPG y comprimir fotos – ToolBoxViral"
+  description="Convierte imágenes HEIC del iPhone, PNG o WebP a JPG (y al revés) y reduce su peso. Varias a la vez, gratis y sin subir tus fotos a ningún servidor."
+  h1="Convertir y comprimir imágenes"
+  intro="Pasa tus fotos a JPG, WebP o PNG y redúcelas de tamaño en un clic. Funciona con las fotos HEIC del iPhone y con varias imágenes a la vez."
+  faq={faq}
+>
+  <ImageConverter slot="calc" client:only="react" />
+
+  <h2>Cómo convertir una imagen</h2>
+  <ol>
+    <li>Arrastra una o varias imágenes al recuadro (o pégalas con Ctrl+V).</li>
+    <li>Elige el formato de salida, la calidad y, si quieres, un tamaño máximo.</li>
+    <li>Descarga cada imagen o todas a la vez. Verás cuánto peso has ahorrado.</li>
+  </ol>
+  <h2>Qué formato elegir</h2>
+  <table>
+    <thead><tr><th>Formato</th><th>Úsalo para</th><th>Transparencia</th></tr></thead>
+    <tbody>
+      <tr><td>JPG</td><td>Fotos para enviar, subir o imprimir: es compatible con todo</td><td>No</td></tr>
+      <tr><td>WebP</td><td>Webs y tiendas online: pesa menos con la misma calidad</td><td>Sí</td></tr>
+      <tr><td>PNG</td><td>Logos, capturas de pantalla e imágenes con fondo transparente</td><td>Sí</td></tr>
+      <tr><td>HEIC</td><td>Formato de las cámaras del iPhone: conviértelo para poder abrirlo en cualquier sitio</td><td>Sí</td></tr>
+    </tbody>
+  </table>
+  <h2>Cuánto reducir una foto</h2>
+  <p>Una foto de móvil ocupa entre 2 y 6 MB. Para enviarla o publicarla en una web basta con <strong>1920 px</strong> de lado y calidad del 80 %: suele quedarse por debajo de 400 KB sin diferencia visible. Para redes sociales, 1080 px es el tamaño que usan Instagram y TikTok.</p>
+</ToolPage>

@@ -1,0 +1,38 @@
+---
+import Legal from '../layouts/Legal.astro'
+import { SITE } from '../config.js'
+---
+<Legal title="Política de privacidad" description="Cómo tratamos tus datos personales. Tus imágenes y textos no salen de tu navegador.">
+  <h2>1. Responsable del tratamiento</h2>
+  <p>{SITE.owner}, con NIF {SITE.ownerId} y domicilio en {SITE.address}. Contacto: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+
+  <h2>2. Tus imágenes y textos no se envían</h2>
+  <p>Las imágenes y los textos que usas en las herramientas se procesan en tu navegador. La herramienta de quitar fondos descarga un modelo de IA desde el servidor de su proveedor (IMG.LY), pero tu imagen no se envía. <strong>No se envían ni se guardan</strong> en nuestros servidores.</p>
+
+  <h2>3. Datos que sí se tratan</h2>
+  <h3>a) Correo de contacto</h3>
+  <p>Si nos escribes, trataremos tu dirección y tu mensaje para responderte. Base legal: tu consentimiento (art. 6.1.a RGPD). Los conservaremos mientras dure la conversación y, después, durante los plazos legales.</p>
+  <h3>b) Publicidad (Google AdSense)</h3>
+  <p>
+    Este sitio muestra anuncios de Google AdSense. Google y sus socios pueden usar cookies e identificadores para mostrar anuncios y medir su rendimiento y, si lo aceptas, para personalizarlos.
+    Base legal: tu consentimiento, que gestionamos con una plataforma de consentimiento certificada por Google. Más información en
+    <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">cómo utiliza Google los datos de los sitios que usan sus servicios</a>.
+    Puedes configurar tus preferencias en <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Configuración de anuncios</a>.
+  </p>
+  <h3>c) Datos técnicos</h3>
+  <p>El proveedor de alojamiento puede registrar datos técnicos (dirección IP, navegador, fecha) por motivos de seguridad. Base legal: interés legítimo (art. 6.1.f RGPD).</p>
+
+  <h2>4. Transferencias internacionales</h2>
+  <p>Google y el proveedor de alojamiento pueden tratar datos fuera del Espacio Económico Europeo, amparados en el Marco de Privacidad de Datos UE-EE. UU. o en cláusulas contractuales tipo.</p>
+
+  <h2>5. Tus derechos</h2>
+  <p>
+    Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad, y retirar tu consentimiento, escribiendo a
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. También puedes reclamar ante la Agencia Española de Protección de Datos (<a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">aepd.es</a>).
+  </p>
+
+  <h2>6. Menores</h2>
+  <p>Este sitio no está dirigido a menores de 14 años.</p>
+
+  <p>Más información en nuestra <a href="/politica-de-cookies">Política de cookies</a>.</p>
+</Legal>

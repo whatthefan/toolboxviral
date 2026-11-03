@@ -1,0 +1,19 @@
+---
+// Lucide icon inlined at build time (no JavaScript, no extra request).
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+
+const { name, size = 24, class: className = '', strokeWidth = 1.75 } = Astro.props
+let svg = ''
+try {
+  svg = readFileSync(join(process.cwd(), 'node_modules/lucide-static/icons', `${name}.svg`), 'utf8')
+    .replace(/<!--[\s\S]*?-->/, '')
+    .replace(/width="24"/, `width="${size}"`)
+    .replace(/height="24"/, `height="${size}"`)
+    .replace(/stroke-width="2"/, `stroke-width="${strokeWidth}"`)
+    .replace(/class="[^"]*"/, `class="${className}" aria-hidden="true" focusable="false"`)
+} catch {
+  throw new Error(`Icon not found: ${name}`)
+}
+---
+<Fragment set:html={svg} />

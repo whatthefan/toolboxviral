@@ -1,0 +1,41 @@
+---
+import ToolPage from '../layouts/ToolPage.astro'
+import ImageResizer from '../components/tools/ImageResizer.jsx'
+
+const faq = [
+  ['¿Qué tamaño tiene una imagen de TikTok o Reels?', '1080 × 1920 píxeles (proporción 9:16), el mismo que las Stories de Instagram y los YouTube Shorts.'],
+  ['¿Qué tamaño tiene una miniatura de YouTube?', '1280 × 720 píxeles (16:9), con un peso máximo de 2 MB. Con JPG y calidad alta suele quedar muy por debajo.'],
+  ['¿Qué tamaño es mejor para un post de Instagram?', 'El vertical 1080 × 1350 (4:5), porque ocupa más pantalla en el feed que el cuadrado 1080 × 1080.'],
+  ['¿Pierdo calidad?', 'Las imágenes se redimensionan con suavizado de alta calidad. Si necesitas la máxima nitidez, descarga en PNG.'],
+]
+---
+<ToolPage
+  title="Redimensionar imagen para Instagram, TikTok y YouTube – ToolBoxViral"
+  description="Adapta tus fotos al tamaño exacto de Reels, TikTok, Stories, Instagram y miniaturas de YouTube. Con fondo desenfocado, sin recortar y sin marca de agua."
+  h1="Redimensionar imágenes para redes"
+  intro="Elige la red social y obtén la imagen con el tamaño exacto. Sin recortar a la persona: el hueco se rellena con un fondo desenfocado o de color."
+  faq={faq}
+>
+  <ImageResizer slot="calc" client:only="react" />
+
+  <h2>Tamaños de imagen para redes sociales</h2>
+  <table>
+    <thead><tr><th>Formato</th><th>Tamaño en píxeles</th><th>Proporción</th></tr></thead>
+    <tbody>
+      <tr><td>Reels, TikTok, Shorts y Stories</td><td>1080 × 1920</td><td>9:16</td></tr>
+      <tr><td>Post de Instagram vertical</td><td>1080 × 1350</td><td>4:5</td></tr>
+      <tr><td>Post de Instagram cuadrado</td><td>1080 × 1080</td><td>1:1</td></tr>
+      <tr><td>Miniatura de YouTube</td><td>1280 × 720</td><td>16:9</td></tr>
+      <tr><td>Banner de YouTube</td><td>2560 × 1440</td><td>16:9</td></tr>
+      <tr><td>Post de X (Twitter)</td><td>1600 × 900</td><td>16:9</td></tr>
+      <tr><td>Banner de LinkedIn</td><td>1584 × 396</td><td>4:1</td></tr>
+    </tbody>
+  </table>
+  <h2>Cómo usarlo</h2>
+  <ol>
+    <li>Sube tu imagen y elige el formato: Reels/TikTok, post de Instagram, miniatura de YouTube…</li>
+    <li>Elige «Rellenar» para recortar al tamaño exacto o «Ajustar» para no cortar nada, con fondo desenfocado o de color.</li>
+    <li>Elige JPG, PNG o WebP y la calidad, y descarga la imagen lista para publicar.</li>
+  </ol>
+  <p>¿La foto es HEIC del iPhone? Pásala antes a JPG con el <a href="/convertir-imagen">conversor de imágenes</a>.</p>
+</ToolPage>

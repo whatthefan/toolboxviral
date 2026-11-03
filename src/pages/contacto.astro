@@ -1,0 +1,13 @@
+---
+import Legal from '../layouts/Legal.astro'
+import { SITE } from '../config.js'
+---
+<Legal title="Contacto" description="Escríbenos para sugerencias, errores o colaboraciones." showUpdated={false}>
+  <p>¿Una herramienta no funciona bien, echas en falta alguna o quieres colaborar con nosotros? Escríbenos y te responderemos lo antes posible.</p>
+  <p><a href={`mailto:${SITE.email}?subject=Contacto%20desde%20ToolBoxViral`}>{SITE.email}</a></p>
+  <h2>Antes de escribir</h2>
+  <ul>
+    <li>Si algo falla, dinos qué herramienta usabas, el tipo de archivo y tu navegador (Chrome, Safari…).</li>
+    <li>No guardamos tus archivos, así que no podemos recuperar imágenes ni textos.</li>
+  </ul>
+</Legal>

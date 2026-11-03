@@ -1,0 +1,40 @@
+---
+import ToolPage from '../layouts/ToolPage.astro'
+import TextAnalyzer from '../components/tools/TextAnalyzer.jsx'
+
+const faq = [
+  ['¿Esto detecta si un texto está escrito con IA?', 'Ninguna herramienta puede saberlo con certeza, ni siquiera los detectores de pago. Aquí ves señales de estilo que suelen aparecer en textos generados (frases hechas, ritmo muy uniforme) para que revises tu texto, no para juzgar a nadie.'],
+  ['¿Qué es el índice de legibilidad Fernández-Huerta?', 'Es la adaptación al español de la fórmula de Flesch. Va de 0 a 100: cuanto más alto, más fácil de leer. Entre 60 y 70 es lo normal para un público general.'],
+  ['¿Cómo se calcula el tiempo de lectura?', 'Con una velocidad media de 200 palabras por minuto leyendo y 150 hablando, útil para calcular la duración de un guion de vídeo o podcast.'],
+  ['¿Cuántos caracteres caben en un post?', 'X (Twitter) permite 280 caracteres en cuentas gratuitas, la descripción de Instagram hasta 2.200 y la bio de Instagram 150.'],
+  ['¿Se guarda mi texto?', 'No. El análisis se hace en tu navegador y el texto no se envía a ninguna parte.'],
+]
+---
+<ToolPage
+  title="Contador de palabras y caracteres online gratis – ToolBoxViral"
+  description="Cuenta palabras y caracteres, calcula el tiempo de lectura y la legibilidad, y detecta frases cliché y señales de estilo típicas de textos de IA."
+  h1="Contador de palabras y analizador de texto"
+  intro="Pega tu texto y ve al momento palabras, caracteres, tiempo de lectura, legibilidad y las frases que conviene cambiar."
+  faq={faq}
+>
+  <TextAnalyzer slot="calc" client:only="react" />
+
+  <h2>Qué mide el analizador</h2>
+  <ul>
+    <li><strong>Palabras, caracteres y frases</strong>, con y sin espacios.</li>
+    <li><strong>Tiempo de lectura</strong> (200 palabras por minuto) y <strong>de locución</strong> (150), para guiones de vídeo y pódcast.</li>
+    <li><strong>Legibilidad Fernández-Huerta</strong>: lo fácil que es de leer tu texto en español.</li>
+    <li><strong>Frases cliché, palabras repetidas y ritmo</strong>: señales que hacen un texto más pesado.</li>
+  </ul>
+  <h2>Límites de caracteres en redes</h2>
+  <table>
+    <thead><tr><th>Dónde</th><th>Máximo de caracteres</th></tr></thead>
+    <tbody>
+      <tr><td>Post de X (Twitter), cuenta gratuita</td><td>280</td></tr>
+      <tr><td>Descripción de Instagram</td><td>2.200</td></tr>
+      <tr><td>Biografía de Instagram</td><td>150</td></tr>
+      <tr><td>Título de un vídeo de YouTube</td><td>100</td></tr>
+      <tr><td>Descripción de TikTok</td><td>4.000</td></tr>
+    </tbody>
+  </table>
+</ToolPage>
