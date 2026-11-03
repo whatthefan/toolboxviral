@@ -61,13 +61,18 @@ const canvasOf = (w, h) => {
   return c
 }
 
-/** Devuelve un PNG (Blob) con el fondo transparente. */
-export async function removeBackground(file) {
-  const [{ ort, session }, bmp] = await Promise.all([prepare(), createImageBitmap(file)])
+const MASK_SIDE = 1600 // la máscara editable no necesita más; se amplía al descargar
+
+/**
+ * Recorta la foto automáticamente. Devuelve la foto (a tamaño original) y una máscara editable:
+ * lo opaco de la máscara se conserva y lo transparente se borra.
+ */
+export async function cutout(file) {
+  const [{ ort, session }, bitmap] = await Promise.all([prepare(), createImageBitmap(file)])
 
   // Entrada: 320×320, normalizada como en el entrenamiento del modelo
   const small = canvasOf(SIZE, SIZE).getContext('2d', { willReadFrequently: true })
-  small.drawImage(bmp, 0, 0, SIZE, SIZE)
+  small.drawImage(bitmap, 0, 0, SIZE, SIZE)
   const px = small.getImageData(0, 0, SIZE, SIZE).data
   const n = SIZE * SIZE
   const input = new Float32Array(3 * n)
@@ -85,21 +90,36 @@ export async function removeBackground(file) {
   // Máscara: se normaliza y se suaviza un poco el borde
   let lo = Infinity, hi = -Infinity
   for (let i = 0; i < n; i++) { lo = Math.min(lo, pred[i]); hi = Math.max(hi, pred[i]) }
-  const mask = small.createImageData(SIZE, SIZE)
+  const raw = small.createImageData(SIZE, SIZE)
   for (let i = 0; i < n; i++) {
     const v = (pred[i] - lo) / (hi - lo || 1)
-    mask.data[i * 4 + 3] = Math.round(Math.min(1, Math.max(0, (v - 0.08) / 0.84)) * 255)
+    raw.data[i * 4] = raw.data[i * 4 + 1] = raw.data[i * 4 + 2] = 255
+    raw.data[i * 4 + 3] = Math.round(Math.min(1, Math.max(0, (v - 0.08) / 0.84)) * 255)
   }
-  const maskCanvas = canvasOf(SIZE, SIZE)
-  maskCanvas.getContext('2d').putImageData(mask, 0, 0)
+  const rawCanvas = canvasOf(SIZE, SIZE)
+  rawCanvas.getContext('2d').putImageData(raw, 0, 0)
 
-  // Resultado a tamaño original: la foto, recortada con la máscara ampliada
-  const outCanvas = canvasOf(bmp.width, bmp.height)
-  const ctx = outCanvas.getContext('2d')
-  ctx.drawImage(bmp, 0, 0)
+  const k = Math.min(1, MASK_SIDE / Math.max(bitmap.width, bitmap.height))
+  const mask = canvasOf(Math.round(bitmap.width * k), Math.round(bitmap.height * k))
+  const mctx = mask.getContext('2d', { willReadFrequently: true })
+  mctx.imageSmoothingQuality = 'high'
+  mctx.drawImage(rawCanvas, 0, 0, mask.width, mask.height)
+  return { bitmap, mask }
+}
+
+/** Junta la foto y la máscara a tamaño original. Con `bg` se pone ese color de fondo. */
+export function compose(bitmap, mask, bg) {
+  const cut = canvasOf(bitmap.width, bitmap.height)
+  const ctx = cut.getContext('2d')
+  ctx.drawImage(bitmap, 0, 0)
   ctx.globalCompositeOperation = 'destination-in'
   ctx.imageSmoothingQuality = 'high'
-  ctx.drawImage(maskCanvas, 0, 0, bmp.width, bmp.height)
-  bmp.close?.()
-  return new Promise((resolve, reject) => outCanvas.toBlob((b) => (b ? resolve(b) : reject(new Error('toBlob'))), 'image/png'))
+  ctx.drawImage(mask, 0, 0, bitmap.width, bitmap.height)
+  if (!bg) return cut
+  const out = canvasOf(bitmap.width, bitmap.height)
+  const octx = out.getContext('2d')
+  octx.fillStyle = bg
+  octx.fillRect(0, 0, out.width, out.height)
+  octx.drawImage(cut, 0, 0)
+  return out
 }

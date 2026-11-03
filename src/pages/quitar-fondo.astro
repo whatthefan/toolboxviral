@@ -6,6 +6,7 @@ const faq = [
   ['¿Mis fotos se suben a algún servidor?', 'No. El recorte se hace en tu propio dispositivo. Nadie más ve tu imagen.'],
   ['¿Cuánto tarda?', 'Menos de un segundo por foto. El recortador se prepara solo mientras abres la página y queda guardado en tu navegador para las siguientes veces.'],
   ['¿Para qué sirve una imagen con fondo transparente?', 'Para miniaturas de YouTube, fotos de producto, stickers, montajes para Reels o TikTok y presentaciones.'],
+  ['¿Y si se queda con lo que no quiero?', 'Elige Conservar y pinta sobre lo que quieres mantener (una mano, un papel, un objeto), o Borrar y pinta sobre lo que sobra, como una cara. Puedes deshacer cada pincelada.'],
   ['¿Hay límite de imágenes?', 'No. Puedes usarlo tantas veces como quieras, sin registro y sin marca de agua.'],
   ['¿Funciona con fotos de producto, personas y mascotas?', 'Sí. Funciona mejor cuando el objeto principal está bien enfocado y se distingue del fondo.'],
 ]
@@ -14,7 +15,7 @@ const faq = [
   title="Quitar fondo de imagen gratis y al instante – ToolBoxViral"
   description="Elimina el fondo de cualquier foto en un segundo. Gratis, sin registro y sin subir tu imagen a ningún servidor. Descarga en PNG transparente."
   h1="Quitar el fondo de una imagen"
-  intro="Sube una foto y se recorta al momento a la persona u objeto principal. Descárgala en PNG con fondo transparente, blanco o negro."
+  intro="Sube una foto y se recorta al momento a la persona u objeto principal. Si quieres otra parte, píntala para conservarla o borrarla. Descárgala en PNG con fondo transparente, blanco o negro."
   faq={faq}
 >
   <BackgroundRemover slot="calc" client:only="react" />
@@ -23,6 +24,7 @@ const faq = [
   <ol>
     <li>Arrastra tu foto al recuadro, haz clic para elegirla o pégala con Ctrl+V.</li>
     <li>En un segundo se detecta a la persona u objeto principal y se elimina el resto.</li>
+    <li>Si quieres otra parte, usa Conservar o Borrar y pinta encima con el dedo o el ratón.</li>
     <li>Compara el antes y el después con el deslizador y descarga el PNG.</li>
   </ol>
   <h2>Consejos para un recorte limpio</h2>
