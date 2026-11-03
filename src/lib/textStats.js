@@ -97,3 +97,66 @@ export function analyze(text) {
     clichesPer100: nWords ? (cliches.reduce((a, [, n]) => a + n, 0) / nWords) * 100 : 0,
   }
 }
+
+// ---------- Probabilidad de que un texto sea de IA ----------
+// Estimación por estilo: combina señales que separan bien los textos generados de los escritos a mano
+// (ritmo uniforme, muletillas, conectores al inicio de frase, falta de rasgos personales, párrafos iguales).
+// No es una prueba: con textos cortos o muy editados se equivoca más.
+
+const AI_PHRASES = [
+  ...CLICHES,
+  'además', 'por último', 'en primer lugar', 'en segundo lugar', 'finalmente', 'sin embargo', 'por lo tanto', 'de esta manera',
+  'de este modo', 'es decir', 'en términos de', 'a medida que', 'ofrece una', 'permite a', 'garantizar', 'optimizar', 'potenciar',
+  'fomentar', 'enriquecedor', 'invaluable', 'clave para', 'aspecto clave', 'experiencia única', 'transformar', 'revolucionar',
+  "in today's", 'it is important to', "it's important to", 'delve', 'tapestry', 'landscape', 'moreover', 'furthermore',
+  'additionally', 'in conclusion', 'overall,', 'plays a crucial role', 'a testament to', 'navigate the', 'embark on', 'seamless',
+]
+const CONNECTORS = /^(además|asimismo|por otro lado|por otra parte|en primer lugar|en segundo lugar|por último|finalmente|sin embargo|no obstante|por lo tanto|en conclusión|en resumen|en definitiva|de esta manera|de este modo|también|moreover|furthermore|additionally|however|in conclusion|overall|first|second|finally)\b/i
+const PERSONAL = /\b(yo|me|mi|mis|conmigo|mío|mía|nosotros|nos|i|my|me|we|our)\b/gi
+const INFORMAL = /\b(vale|jaja|jeje|pues|bueno|o sea|tío|tía|guay|flipa|ojalá|uf|eh|ok|lol|btw)\b|[!¡?¿]{2,}|\.\.\.|[\u{1F300}-\u{1FAFF}]/giu
+
+const clamp01 = (x) => Math.max(0, Math.min(1, x))
+
+export function aiLikelihood(text) {
+  const words = text.match(/[\p{L}\p{N}]+(?:['’-]\p{L}+)*/gu) || []
+  const n = words.length
+  if (n < 40) return null
+  const sentences = text.split(/(?<=[.!?…])\s+|\n+/).map((s) => s.trim()).filter((s) => /\p{L}/u.test(s))
+  const lens = sentences.map((s) => (s.match(/[\p{L}\p{N}]+/gu) || []).length)
+  const mean = lens.reduce((a, b) => a + b, 0) / (lens.length || 1)
+  const sd = Math.sqrt(lens.reduce((a, b) => a + (b - mean) ** 2, 0) / (lens.length || 1))
+  const cv = mean ? sd / mean : 0
+  const lower = text.toLowerCase()
+  const phrases = AI_PHRASES.reduce((a, p) => a + (lower.split(p).length - 1), 0)
+  const starts = sentences.filter((s) => CONNECTORS.test(s)).length / (sentences.length || 1)
+  const personal = ((text.match(PERSONAL) || []).length + (text.match(INFORMAL) || []).length * 2) / n
+  const digits = (text.match(/\d/g) || []).length / n
+  const paras = text.split(/\n\s*\n/).map((p) => (p.match(/[\p{L}\p{N}]+/gu) || []).length).filter(Boolean)
+  const pMean = paras.reduce((a, b) => a + b, 0) / (paras.length || 1)
+  const pCv = paras.length > 2 && pMean ? Math.sqrt(paras.reduce((a, b) => a + (b - pMean) ** 2, 0) / paras.length) / pMean : 0.5
+  const listy = (text.match(/^\s*(?:[-•*]|\d+\.)\s|\*\*[^*]+\*\*|^#+\s/gm) || []).length / Math.max(1, sentences.length)
+  const questions = (text.match(/[?¿]/g) || []).length / Math.max(1, sentences.length)
+
+  // Cada señal va de 0 (humano) a 1 (IA); el peso indica cuánto pesa en el resultado
+  const signals = [
+    ['Ritmo de las frases muy uniforme', clamp01((0.62 - cv) / 0.4), 2.2],
+    ['Muletillas y expresiones típicas de IA', clamp01((phrases / n) * 100 / 2.2), 2.6],
+    ['Frases que empiezan con conectores', clamp01(starts / 0.3), 1.4],
+    ['Pocos rasgos personales (yo, opiniones, tono coloquial)', clamp01(1 - personal / 0.03), 1.6],
+    ['Longitud media de frase típica de IA (16–26 palabras)', mean >= 14 && mean <= 28 ? 1 - Math.abs(mean - 21) / 9 : 0, 0.8],
+    ['Párrafos de tamaño muy parecido', clamp01((0.45 - pCv) / 0.35), 0.9],
+    ['Formato de lista o con negritas', clamp01(listy / 0.4), 0.7],
+    ['Sin datos concretos ni preguntas', clamp01(1 - (digits * 40 + questions * 3)), 0.6],
+  ].map(([label, value, weight]) => ({ label, value, weight }))
+
+  const total = signals.reduce((a, s) => a + s.weight, 0)
+  const raw = signals.reduce((a, s) => a + s.value * s.weight, 0) / total
+  // Curva en S centrada en 0,45 para separar los casos claros de los dudosos
+  const pct = Math.round(100 / (1 + Math.exp(-9 * (raw - 0.45))))
+  return {
+    pct,
+    verdict: pct >= 70 ? 'Probablemente escrito con IA' : pct >= 40 ? 'Mezcla o texto muy editado' : 'Probablemente escrito por una persona',
+    confidence: n >= 300 ? 'alta' : n >= 120 ? 'media' : 'baja',
+    signals: signals.sort((a, b) => b.value * b.weight - a.value * a.weight),
+  }
+}

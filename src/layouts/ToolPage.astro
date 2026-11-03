@@ -35,7 +35,7 @@ const width = sidebar ? 'max-w-6xl' : 'max-w-4xl'
     <div class="absolute inset-0 -z-10 overflow-hidden"><img src={photo(here)} alt="" class="hero-img absolute inset-0 h-full w-full object-cover" fetchpriority="high" /></div>
     <div class="mist" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-950/95 via-brand-950/85 to-brand-950/55"></div>
-    <div class:list={['mx-auto px-4 pt-7 pb-24', width]}>
+    <div class:list={['mx-auto px-4 pt-5 pb-20 sm:pt-7 sm:pb-24', width]}>
       <nav aria-label="Ruta" class="flex items-center gap-1.5 text-sm text-brand-100/75">
         <a href="/" class="hover:text-white">Inicio</a>
         <Icon name="chevron-right" size={14} />
@@ -43,7 +43,7 @@ const width = sidebar ? 'max-w-6xl' : 'max-w-4xl'
       </nav>
       <h1 class="mt-4 max-w-3xl font-display text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl">{h1}</h1>
       <p class="mt-3 max-w-2xl text-lg text-brand-100/90">{intro}</p>
-      <p class="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm text-brand-100/80">
+      <p class="mt-4 hidden flex-wrap gap-x-5 gap-y-1 text-sm text-brand-100/80 sm:flex">
         <span class="inline-flex items-center gap-1.5"><Icon name="badge-check" size={16} class="text-gold-300" />{updated}</span>
         <span class="inline-flex items-center gap-1.5"><Icon name="lock" size={16} class="text-gold-300" />Sin registro</span>
         <span class="inline-flex items-center gap-1.5"><Icon name="shield-check" size={16} class="text-gold-300" />Tus archivos no se suben</span>
@@ -97,21 +97,23 @@ const width = sidebar ? 'max-w-6xl' : 'max-w-4xl'
 
         <section class="mt-12">
           <h2 class="font-display text-2xl font-semibold tracking-tight">Otras herramientas</h2>
-          <div class="mt-5 grid gap-5 sm:grid-cols-3">
+          <div class="mt-5 grid gap-3 sm:grid-cols-3 sm:gap-5">
             {others.map((c) => (
-              <a href={c.path} class="group block">
-                <div class="aspect-[3/2] overflow-hidden rounded-2xl bg-brand-100">
+              <a href={c.path} class="group flex items-center gap-3 rounded-2xl bg-white p-2 ring-1 ring-black/5 sm:block sm:bg-transparent sm:p-0 sm:ring-0 dark:bg-white/5 dark:ring-white/10 sm:dark:bg-transparent">
+                <div class="h-14 w-20 shrink-0 overflow-hidden rounded-xl bg-brand-100 sm:aspect-[3/2] sm:h-auto sm:w-auto sm:rounded-2xl">
                   <img src={photo(c.path)} alt="" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                 </div>
-                <p class="mt-2 font-semibold group-hover:text-brand-700 dark:group-hover:text-brand-300">{c.label}</p>
-                <p class="text-sm text-stone-500 dark:text-stone-400">{c.blurb}</p>
+                <div class="min-w-0">
+                  <p class="sm:mt-2 font-semibold group-hover:text-brand-700 dark:group-hover:text-brand-300">{c.label}</p>
+                  <p class="line-clamp-1 text-sm sm:line-clamp-none text-stone-500 dark:text-stone-400">{c.blurb}</p>
+                </div>
               </a>
             ))}
           </div>
           <a href="/#herramientas" class="mt-6 inline-flex items-center gap-1.5 font-semibold text-brand-700 dark:text-brand-300">Ver todas las herramientas <Icon name="arrow-right" size={16} /></a>
         </section>
 
-        <p class="mt-10 flex gap-3 rounded-2xl bg-stone-900/[0.03] p-4 text-xs leading-relaxed text-stone-500 dark:bg-white/5 dark:text-stone-400">
+        <p class="mt-8 flex gap-3 rounded-2xl sm:mt-10 bg-stone-900/[0.03] p-4 text-xs leading-relaxed text-stone-500 dark:bg-white/5 dark:text-stone-400">
           <Icon name="info" size={16} class="mt-0.5 shrink-0" />
           Todo se procesa en tu navegador: tus fotos y textos no se suben a ningún servidor. Los resultados dependen de la calidad del archivo original.
         </p>

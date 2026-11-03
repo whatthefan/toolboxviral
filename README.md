@@ -8,7 +8,7 @@ Astro 5 + React 19 (solo en las herramientas) + Tailwind CSS 4. Todo se procesa 
 | Quitar fondo | `/quitar-fondo` | IA en el navegador (`@imgly/background-removal`) |
 | Convertir y comprimir | `/convertir-imagen` | Canvas: HEIC (con `heic2any`), JPG, PNG, WebP; varias a la vez |
 | Tamaños para redes | `/redimensionar-imagen` | Canvas: Reels, TikTok, Instagram, YouTube, X, LinkedIn |
-| Analizador de texto | `/analizador-de-texto` | Recuento, legibilidad Fernández-Huerta, clichés y ritmo |
+| Detector de IA | `/detector-de-ia` | Recuento, legibilidad Fernández-Huerta, clichés y ritmo |
 
 ## Uso en local
 

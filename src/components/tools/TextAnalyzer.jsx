@@ -1,5 +1,5 @@
 import { useDeferredValue, useMemo, useState } from 'react'
-import { analyze, readabilityLabel } from '../../lib/textStats.js'
+import { analyze, aiLikelihood, readabilityLabel } from '../../lib/textStats.js'
 
 const EXAMPLE = `En la era digital, las redes sociales juegan un papel fundamental en nuestra vida. Es importante destacar que no solo sirven para entretenernos, sino también para aprender. Además, ofrecen una amplia gama de oportunidades para los creadores de contenido.
 
@@ -13,6 +13,7 @@ export default function TextAnalyzer() {
   const [text, setText] = useState('')
   const deferred = useDeferredValue(text)
   const s = useMemo(() => analyze(deferred), [deferred])
+  const ai = useMemo(() => aiLikelihood(deferred), [deferred])
   const hasText = s.words > 0
 
   return (
@@ -21,7 +22,7 @@ export default function TextAnalyzer() {
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Pega aquí tu redacción, artículo o guion…"
+          placeholder="Pega aquí el texto que quieres comprobar (mínimo 40 palabras)…"
           className="min-h-56 w-full resize-y rounded-2xl border border-zinc-300 bg-zinc-50 p-4 leading-relaxed outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-500/15 dark:border-zinc-700 dark:bg-zinc-950"
         />
         <div className="mt-2 flex gap-3 text-sm">
@@ -29,6 +30,8 @@ export default function TextAnalyzer() {
           {text && <button onClick={() => setText('')} className="text-zinc-500 hover:underline">Borrar</button>}
         </div>
       </div>
+
+      <AiMeter ai={ai} words={s.words} />
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <Stat label="Palabras" value={s.words.toLocaleString('es')} />
@@ -119,6 +122,48 @@ export default function TextAnalyzer() {
           no como prueba para acusar a nadie.
         </p>
       )}
+    </div>
+  )
+}
+
+/** Probabilidad de IA: anillo con el porcentaje, veredicto y las señales que más pesan. */
+function AiMeter({ ai, words }) {
+  if (!ai) {
+    return (
+      <div className="rounded-2xl border border-dashed border-zinc-300 p-5 text-center text-sm text-zinc-500 dark:border-zinc-700">
+        {words ? `Escribe al menos 40 palabras para calcular la probabilidad de IA (llevas ${words}).` : 'Pega un texto para saber qué probabilidad hay de que esté escrito con IA.'}
+      </div>
+    )
+  }
+  const tone = ai.pct >= 70 ? ['#db2777', 'text-pink-600 dark:text-pink-400'] : ai.pct >= 40 ? ['#f59e0b', 'text-amber-600 dark:text-amber-400'] : ['#10b981', 'text-emerald-600 dark:text-emerald-400']
+  const C = 2 * Math.PI * 42
+  return (
+    <div className="grid gap-5 rounded-3xl bg-zinc-950 p-5 text-white sm:grid-cols-[auto_1fr] sm:p-6">
+      <div className="flex items-center gap-4 sm:flex-col sm:justify-center">
+        <div className="relative h-32 w-32 shrink-0">
+          <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90" aria-hidden="true">
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#ffffff" strokeOpacity="0.1" strokeWidth="10" />
+            <circle cx="50" cy="50" r="42" fill="none" stroke={tone[0]} strokeWidth="10" strokeLinecap="round" strokeDasharray={`${(ai.pct / 100) * C} ${C}`} style={{ transition: 'stroke-dasharray 0.8s cubic-bezier(0.16,1,0.3,1)' }} />
+          </svg>
+          <span className="absolute inset-0 grid place-items-center"><span className="text-center"><span className="block text-3xl font-extrabold tabular-nums">{ai.pct}%</span><span className="text-[11px] text-zinc-400">IA</span></span></span>
+        </div>
+        <div className="sm:text-center">
+          <p className={`text-lg font-bold ${tone[1]}`}>{ai.verdict}</p>
+          <p className="text-xs text-zinc-400">Fiabilidad {ai.confidence} · {words} palabras</p>
+        </div>
+      </div>
+      <div>
+        <p className="mb-2 text-sm font-semibold">Por qué</p>
+        <ul className="space-y-2">
+          {ai.signals.slice(0, 5).map((sg) => (
+            <li key={sg.label} className="text-sm">
+              <div className="mb-1 flex justify-between gap-3 text-zinc-300"><span>{sg.label}</span><span className="tabular-nums text-zinc-500">{Math.round(sg.value * 100)}%</span></div>
+              <div className="h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full" style={{ width: `${Math.max(3, sg.value * 100)}%`, background: tone[0], transition: 'width 0.8s cubic-bezier(0.16,1,0.3,1)' }} /></div>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 text-xs leading-relaxed text-zinc-500">Estimación por estilo de escritura. Acierta casi siempre con textos de IA sin editar, pero puede fallar con textos cortos, muy formales o retocados. No la uses como única prueba.</p>
+      </div>
     </div>
   )
 }

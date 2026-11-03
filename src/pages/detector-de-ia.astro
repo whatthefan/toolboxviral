@@ -3,7 +3,9 @@ import ToolPage from '../layouts/ToolPage.astro'
 import TextAnalyzer from '../components/tools/TextAnalyzer.jsx'
 
 const faq = [
-  ['¿Esto detecta si un texto está escrito con IA?', 'Ninguna herramienta puede saberlo con certeza, ni siquiera los detectores de pago. Aquí ves señales de estilo que suelen aparecer en textos generados (frases hechas, ritmo muy uniforme) para que revises tu texto, no para juzgar a nadie.'],
+  ['¿Cómo calcula el porcentaje de IA?', 'Combina ocho señales de estilo que distinguen los textos generados de los escritos por personas: el ritmo de las frases, las muletillas típicas de IA, los conectores al empezar frase, los rasgos personales, la longitud de las frases, los párrafos, el formato de lista y los datos concretos. Debajo del porcentaje verás cuáles pesan más en tu texto.'],
+  ['¿Es 100 % fiable?', 'No. Ningún detector lo es, ni siquiera los de pago. Acierta casi siempre con textos de IA sin retocar y con textos personales, pero puede fallar con textos cortos, muy formales o editados a mano. Úsalo como orientación, no como prueba para acusar a nadie.'],
+  ['¿Funciona con ChatGPT, Gemini o Claude?', 'Sí: no busca un modelo concreto, sino el estilo que comparten los textos generados. Funciona con textos en español y en inglés.'],
   ['¿Qué es el índice de legibilidad Fernández-Huerta?', 'Es la adaptación al español de la fórmula de Flesch. Va de 0 a 100: cuanto más alto, más fácil de leer. Entre 60 y 70 es lo normal para un público general.'],
   ['¿Cómo se calcula el tiempo de lectura?', 'Con una velocidad media de 200 palabras por minuto leyendo y 150 hablando, útil para calcular la duración de un guion de vídeo o podcast.'],
   ['¿Cuántos caracteres caben en un post?', 'X (Twitter) permite 280 caracteres en cuentas gratuitas, la descripción de Instagram hasta 2.200 y la bio de Instagram 150.'],
@@ -11,15 +13,17 @@ const faq = [
 ]
 ---
 <ToolPage
-  title="Contador de palabras y caracteres online gratis – ToolBoxViral"
-  description="Cuenta palabras y caracteres, calcula el tiempo de lectura y la legibilidad, y detecta frases cliché y señales de estilo típicas de textos de IA."
-  h1="Contador de palabras y analizador de texto"
-  intro="Pega tu texto y ve al momento palabras, caracteres, tiempo de lectura, legibilidad y las frases que conviene cambiar."
+  title="Detector de IA gratis: ¿tu texto está hecho con IA? – ToolBoxViral"
+  description="Pega un texto y mira qué porcentaje de probabilidad hay de que esté escrito con IA, con las señales que lo delatan. Gratis, sin registro y con contador de palabras."
+  h1="Detector de textos hechos con IA"
+  intro="Pega un texto y te decimos qué probabilidad hay de que esté escrito con IA y por qué. También cuenta palabras, caracteres y tiempo de lectura."
   faq={faq}
 >
   <TextAnalyzer slot="calc" client:only="react" />
 
-  <h2>Qué mide el analizador</h2>
+  <h2>Cómo detecta un texto hecho con IA</h2>
+  <p>Los textos generados suelen tener frases de longitud muy parecida, muchas muletillas («es importante destacar», «en conclusión», «juega un papel fundamental»), conectores al empezar cada frase y casi nada personal: ni opiniones, ni anécdotas, ni datos concretos. El detector mide esas señales y las combina en un porcentaje.</p>
+  <h2>Qué más mide</h2>
   <ul>
     <li><strong>Palabras, caracteres y frases</strong>, con y sin espacios.</li>
     <li><strong>Tiempo de lectura</strong> (200 palabras por minuto) y <strong>de locución</strong> (150), para guiones de vídeo y pódcast.</li>

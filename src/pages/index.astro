@@ -38,23 +38,23 @@ const schema = { '@context': 'https://schema.org', '@type': 'WebSite', name: SIT
   <div class="mx-auto max-w-6xl px-4">
     <section id="herramientas" class="scroll-mt-24 pt-12">
       <h2 class="font-display text-3xl font-extrabold tracking-tight">Todas las herramientas</h2>
-      <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
         {TOOLS.map((t) => (
-          <a href={t.path} class="group block overflow-hidden rounded-3xl bg-white ring-1 ring-stone-900/5 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-900/10 dark:bg-white/5 dark:ring-white/10">
-            <div class="relative aspect-[3/2] overflow-hidden bg-brand-100">
+          <a href={t.path} class="group flex items-center gap-3 overflow-hidden rounded-2xl bg-white p-2 ring-1 ring-stone-900/5 transition hover:-translate-y-1 sm:block sm:rounded-3xl sm:p-0 hover:shadow-xl hover:shadow-brand-900/10 dark:bg-white/5 dark:ring-white/10">
+            <div class="relative h-16 w-20 shrink-0 overflow-hidden rounded-xl bg-brand-100 sm:aspect-[3/2] sm:h-auto sm:w-auto sm:rounded-none">
               <img src={photo(t.path)} alt="" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
-              <span class="absolute bottom-3 left-3 grid h-10 w-10 place-items-center rounded-xl bg-white/95 text-brand-700 shadow"><Icon name={t.icon} size={20} /></span>
+              <span class="absolute bottom-3 left-3 hidden h-10 w-10 place-items-center rounded-xl bg-white/95 text-brand-700 shadow sm:grid"><Icon name={t.icon} size={20} /></span>
             </div>
-            <div class="p-5">
-              <h3 class="flex items-center justify-between gap-2 font-display text-lg font-bold group-hover:text-brand-700 dark:group-hover:text-brand-300">{t.title}<Icon name="arrow-right" size={18} class="shrink-0 text-brand-600 transition group-hover:translate-x-1" /></h3>
-              <p class="mt-1 text-sm text-stone-500 dark:text-stone-400">{t.blurb}</p>
+            <div class="min-w-0 sm:p-5">
+              <h3 class="flex items-center justify-between gap-2 font-display font-bold sm:text-lg group-hover:text-brand-700 dark:group-hover:text-brand-300">{t.title}<Icon name="arrow-right" size={18} class="shrink-0 text-brand-600 transition group-hover:translate-x-1" /></h3>
+              <p class="mt-0.5 line-clamp-1 text-sm text-stone-500 sm:mt-1 sm:line-clamp-none dark:text-stone-400">{t.blurb}</p>
             </div>
           </a>
         ))}
       </div>
     </section>
 
-    <ul class="mt-12 grid gap-4 rounded-3xl bg-brand-950 p-6 text-sm text-brand-100 sm:grid-cols-3 sm:p-8">
+    <ul class="mt-12 hidden gap-4 rounded-3xl bg-brand-950 p-6 sm:grid text-sm text-brand-100 sm:grid-cols-3 sm:p-8">
       {[['shield-check', 'Privado', 'Tus fotos y textos se procesan en tu dispositivo'], ['badge-check', 'Sin marca de agua', 'Descarga el resultado limpio, siempre gratis'], ['smartphone', 'En el móvil', 'Funciona en el navegador, sin instalar nada']].map(([i, t, d]) => (
         <li class="flex gap-3"><Icon name={i} size={22} class="mt-0.5 shrink-0 text-gold-300" /><span><strong class="block text-white">{t}</strong>{d}</span></li>
       ))}

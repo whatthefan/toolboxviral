@@ -6,7 +6,7 @@ Fotos de [Unsplash](https://unsplash.com) (Licencia Unsplash: uso libre, tambié
 - public/img/quitar-fondo.webp: https://unsplash.com/photos/CkzMxn8tJ7A
 - public/img/convertir-imagen.webp: https://unsplash.com/photos/SL5d_8ywAAA
 - public/img/redimensionar-imagen.webp: https://unsplash.com/photos/Aqc7znjxROM
-- public/img/analizador-de-texto.webp: https://unsplash.com/photos/333oj7zFsdg
+- public/img/detector-de-ia.webp: https://unsplash.com/photos/333oj7zFsdg
 
 ## Vídeo de la portada
 
