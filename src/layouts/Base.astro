@@ -122,6 +122,7 @@ const canonical = new URL(here, Astro.site)
             <a class="hover:text-white" href="/aviso-legal">Aviso legal</a>
             <a class="hover:text-white" href="/politica-de-privacidad">Privacidad</a>
             <a class="hover:text-white" href="/politica-de-cookies">Cookies</a>
+            {ADSENSE.client && <button type="button" class="hover:text-white" onclick="window.googlefc=window.googlefc||{};(googlefc.callbackQueue=googlefc.callbackQueue||[]).push(function(){googlefc.showRevocationMessage()})">Configurar cookies</button>}
           </nav>
         </div>
       </div>
