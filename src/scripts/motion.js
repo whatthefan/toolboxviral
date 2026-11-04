@@ -108,3 +108,39 @@ document.addEventListener('click', (e) => {
   history.pushState(null, '', url.hash)
   travel(Math.max(0, el.getBoundingClientRect().top + scrollY - 90))
 })
+
+// Menú: fondo oscurecido, enlaces numerados para su animación de entrada y una copia 3D del logo girando arriba.
+const menu = document.querySelector('header details')
+const panel = menu?.querySelector(':scope > div')
+if (menu && panel) {
+  const scrim = document.createElement('div')
+  scrim.className = 'menu-scrim'
+  scrim.setAttribute('aria-hidden', 'true')
+  document.body.append(scrim)
+  panel.querySelectorAll('a').forEach((a, i) => a.style.setProperty('--i', Math.min(i, 24)))
+  const logo = document.querySelector('header a svg')
+  if (logo) {
+    const model = document.createElement('div')
+    model.className = 'menu-model'
+    model.setAttribute('aria-hidden', 'true')
+    const body = document.createElement('div')
+    body.className = 'menu-model-body'
+    const depth = 9
+    for (let k = 0; k < depth; k++) {
+      const s = logo.cloneNode(true)
+      s.removeAttribute('width')
+      s.removeAttribute('height')
+      s.style.transform = `translateZ(${(k - (depth - 1) / 2) * 1.2}px)`
+      if (k > 0 && k < depth - 1) s.style.filter = 'brightness(0.55)'
+      body.append(s)
+    }
+    const glow = document.createElement('span')
+    glow.className = 'menu-model-glow'
+    model.append(body, glow)
+    panel.prepend(model)
+    const accent = getComputedStyle(menu.querySelector('summary')).backgroundColor
+    model.style.setProperty('--menu-accent', accent)
+  }
+  // La página de debajo se queda donde estaba; el menú siempre se abre por arriba
+  menu.addEventListener('toggle', () => { if (menu.open) panel.scrollTop = 0 })
+}

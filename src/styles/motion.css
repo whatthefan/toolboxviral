@@ -137,3 +137,53 @@ html.travel .scroll-progress { height: 4px; }
 .pop { animation: unit-pop 0.5s var(--ease-out-expo) both; }
 @keyframes unit-pop { from { opacity: 0; transform: translateY(6px) scale(0.4); } }
 @media (prefers-reduced-motion: reduce) { .float-card, .ring-seg, .grow-x, .pop { animation: none; } }
+
+/* Menú: tiene su propio scroll y cabe en la pantalla, así en el móvil se llega siempre a los últimos enlaces. */
+header details > div {
+  max-height: calc(100dvh - 5.5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  transform-origin: top right;
+}
+@media (max-width: 639px) {
+  html:has(header details[open]) { overflow: hidden; }
+  header details > div { position: fixed; top: 4.5rem; left: 0.75rem; right: 0.75rem; width: auto; margin: 0; padding-bottom: 1.25rem; }
+}
+.menu-scrim {
+  position: fixed; inset: 0; z-index: 30;
+  background: rgb(6 12 16 / 0.45);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+html:has(header details[open]) .menu-scrim { opacity: 1; pointer-events: auto; }
+
+/* Logo 3D girando arriba del menú: copias del logo apiladas en profundidad, para que parezca una pieza sólida. */
+.menu-model { display: flex; justify-content: center; padding: 0.25rem 0 0.75rem; perspective: 600px; }
+.menu-model-body { position: relative; width: 56px; height: 56px; transform-style: preserve-3d; animation: menu-spin 7s linear infinite; }
+.menu-model-body > svg { position: absolute; inset: 0; width: 100%; height: 100%; backface-visibility: visible; }
+.menu-model-glow { position: absolute; left: 50%; bottom: -10px; width: 64px; height: 12px; margin-left: -32px; border-radius: 50%; background: var(--menu-accent, #888); opacity: 0.35; filter: blur(8px); animation: menu-glow 3.5s ease-in-out infinite; }
+@keyframes menu-spin { from { transform: rotateX(-12deg) rotateY(0deg); } to { transform: rotateX(-12deg) rotateY(360deg); } }
+@keyframes menu-glow { 50% { transform: scaleX(0.75); opacity: 0.2; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* El menú se despliega en profundidad y los enlaces llegan uno tras otro desde el fondo */
+  header details[open] > div { animation: menu-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  header details[open] > div a { animation: menu-item 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(var(--i, 0) * 22ms + 90ms); }
+  header details[open] .menu-model { animation: menu-item 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  @media (pointer: fine) {
+    header details > div a { transition: transform 0.25s ease, background-color 0.2s, color 0.2s; }
+    header details > div a:hover { transform: perspective(500px) translateZ(14px); }
+  }
+}
+@keyframes menu-in {
+  from { opacity: 0; transform: perspective(1100px) rotateX(-24deg) translateY(-14px) scale(0.94); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@keyframes menu-item {
+  from { opacity: 0; transform: perspective(600px) translate3d(0, 16px, -90px) rotateX(38deg); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .menu-model-body, .menu-model-glow { animation: none; } }
