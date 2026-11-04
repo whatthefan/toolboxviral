@@ -139,8 +139,43 @@ if (menu && panel) {
     model.append(body, glow)
     panel.prepend(model)
     const accent = getComputedStyle(menu.querySelector('summary')).backgroundColor
-    model.style.setProperty('--menu-accent', accent)
+    panel.style.setProperty('--menu-accent', accent)
   }
   // La página de debajo se queda donde estaba; el menú siempre se abre por arriba
   menu.addEventListener('toggle', () => { if (menu.open) panel.scrollTop = 0 })
+}
+
+// Buscador arriba de los menús largos: filtra los enlaces mientras escribes, sin importar tildes ni mayúsculas.
+if (menu && panel && panel.querySelectorAll('a').length > 12) {
+  const es = document.documentElement.lang.startsWith('es')
+  const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim()
+  const box = document.createElement('div')
+  box.className = 'menu-search'
+  const input = document.createElement('input')
+  input.type = 'search'
+  input.placeholder = es ? 'Busca en el menú…' : 'Search the menu…'
+  input.setAttribute('aria-label', input.placeholder)
+  input.autocomplete = 'off'
+  const empty = document.createElement('p')
+  empty.className = 'menu-search-empty'
+  empty.textContent = es ? 'Nada con ese nombre. Prueba con otra palabra.' : 'Nothing by that name. Try another word.'
+  empty.hidden = true
+  box.append(input)
+  const links = [...panel.querySelectorAll('a')]
+  const groups = [...new Set(links.map((a) => a.parentElement))]
+  ;(panel.querySelector('.menu-model') || panel.firstChild).after(box)
+  panel.append(empty)
+  input.addEventListener('input', () => {
+    const q = fold(input.value)
+    let shown = 0
+    links.forEach((a) => { const on = !q || fold(a.textContent).includes(q); a.hidden = !on; if (on) shown++ })
+    groups.forEach((g) => {
+      const any = [...g.querySelectorAll('a')].some((a) => !a.hidden)
+      g.hidden = !any
+      const label = g.previousElementSibling
+      if (label && label.tagName === 'P') label.hidden = !any
+    })
+    empty.hidden = shown > 0
+  })
+  menu.addEventListener('toggle', () => { if (!menu.open && input.value) { input.value = ''; input.dispatchEvent(new Event('input')) } })
 }
