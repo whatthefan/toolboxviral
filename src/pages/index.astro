@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro'
 import AdSlot from '../components/AdSlot.astro'
 import Icon from '../components/Icon.astro'
 import { TOOLS, SITE, photo } from '../config.js'
+import { GUIAS } from '../lib/guias.js'
 
 const schema = { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: `https://${SITE.domain}`, description: SITE.tagline, inLanguage: 'es-ES' }
 ---
@@ -61,5 +62,18 @@ const schema = { '@context': 'https://schema.org', '@type': 'WebSite', name: SIT
     </ul>
 
     <AdSlot slot="content" minHeight={280} class="mt-10 mb-4 max-w-3xl" />
+
+    <section class="pt-10">
+      <h2 class="font-display text-3xl font-semibold tracking-tight">Guías</h2>
+      <p class="mt-2 max-w-2xl text-stone-600 dark:text-stone-400">Lo que conviene saber antes de convertir, comprimir o publicar.</p>
+      <div class="mt-5 grid gap-3 sm:grid-cols-2">
+        {GUIAS.map((g) => (
+          <a href={`/guias/${g.slug}`} class="group rounded-2xl bg-white p-4 ring-1 ring-stone-900/5 transition hover:ring-brand-300 dark:bg-white/5 dark:ring-white/10">
+            <p class="font-semibold group-hover:text-brand-700 dark:group-hover:text-brand-300">{g.title}</p>
+            <p class="mt-1 line-clamp-2 text-sm text-stone-500 dark:text-stone-400">{g.blurb}</p>
+          </a>
+        ))}
+      </div>
+    </section>
   </div>
 </Base>

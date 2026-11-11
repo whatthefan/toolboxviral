@@ -1,0 +1,89 @@
+---
+// Plantilla de las guías: artículo con autor, fechas, fuentes y enlaces a las calculadoras y otras guías.
+import Base from './Base.astro'
+import Icon from '../components/Icon.astro'
+import AdSlot from '../components/AdSlot.astro'
+import { SITE, TOOLS as CALCS, photo } from '../config.js'
+import { GUIAS } from '../lib/guias.js'
+
+const { slug, description, fuentes = [], relacionadas = [] } = Astro.props
+const guia = GUIAS.find((g) => g.slug === slug)
+const url = new URL(`/guias/${slug}`, Astro.site)
+const fecha = (d) => new Date(`${d}T12:00:00Z`).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
+const calcs = relacionadas.map((p) => CALCS.find((c) => c.path === p)).filter(Boolean)
+const mas = GUIAS.filter((g) => g.slug !== slug).slice(0, 3)
+const title = guia.title.length <= 52 ? `${guia.title} – ${SITE.name}` : guia.title
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: guia.title,
+    description,
+    image: new URL(photo(`/guias/${slug}`), Astro.site).href,
+    datePublished: guia.date,
+    dateModified: guia.updated ?? guia.date,
+    author: { '@type': 'Person', name: SITE.owner, url: new URL('/sobre-nosotros', Astro.site).href },
+    publisher: { '@type': 'Organization', name: SITE.name, url: Astro.site?.href },
+    mainEntityOfPage: url.href,
+    inLanguage: 'es-ES',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'Guías', item: new URL('/guias', Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: guia.title, item: url.href },
+    ],
+  },
+]
+---
+<Base title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <section class="hero relative isolate overflow-hidden text-white">
+    <div class="absolute inset-0 -z-10 overflow-hidden"><img src={photo(`/guias/${slug}`)} alt="" class="hero-img absolute inset-0 h-full w-full object-cover" fetchpriority="high" /></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-950/95 via-brand-950/85 to-brand-950/55"></div>
+    <div class="mx-auto max-w-3xl px-4 pt-5 pb-12 sm:pt-7 sm:pb-16">
+      <nav aria-label="Ruta" class="flex flex-wrap items-center gap-1.5 text-sm text-brand-100/75">
+        <a href="/" class="hover:text-white">Inicio</a><Icon name="chevron-right" size={14} />
+        <a href="/guias" class="hover:text-white">Guías</a>
+      </nav>
+      <h1 class="mt-4 font-display text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl">{guia.title}</h1>
+      <p class="mt-4 text-lg text-brand-100/90">{guia.blurb}</p>
+      <p class="mt-5 text-sm text-brand-100/75">Por <a href="/sobre-nosotros" class="underline decoration-white/30 hover:text-white">{SITE.owner}</a> · Publicada el {fecha(guia.date)}{guia.updated && ` · Actualizada el ${fecha(guia.updated)}`}</p>
+    </div>
+  </section>
+
+  <article class="article mx-auto max-w-3xl px-4 py-10">
+    <slot />
+
+    {fuentes.length > 0 && (
+      <>
+        <h2>Fuentes</h2>
+        <ul>{fuentes.map(([label, href]) => <li><a href={href} rel="nofollow noopener" target="_blank">{label}</a></li>)}</ul>
+      </>
+    )}
+    <p class="text-sm text-stone-500 dark:text-stone-400">Las medidas y recomendaciones de las plataformas cambian a menudo: comprueba siempre la ayuda oficial de cada una antes de una publicación importante.</p>
+  </article>
+
+  <div class="mx-auto max-w-3xl px-4"><AdSlot slot="content" minHeight={280} /></div>
+
+  <aside class="mx-auto max-w-3xl px-4 pt-6 pb-6">
+    {calcs.length > 0 && (
+      <>
+        <p class="text-xs font-bold tracking-wider text-stone-400 uppercase">Herramientas</p>
+        <div class="mt-3 grid gap-3 sm:grid-cols-2">
+          {calcs.map((c) => (
+            <a href={c.path} class="flex items-center gap-3 rounded-2xl bg-brand-900 p-4 text-white transition hover:bg-brand-700 dark:bg-white/5">
+              <Icon name={c.icon} size={20} class="text-gold-300" /><span class="font-semibold">{c.title}</span>
+            </a>
+          ))}
+        </div>
+      </>
+    )}
+    <p class="mt-10 text-xs font-bold tracking-wider text-stone-400 uppercase">Más guías</p>
+    <ul class="mt-3 space-y-2">
+      {mas.map((g) => <li><a href={`/guias/${g.slug}`} class="font-semibold text-brand-700 hover:underline dark:text-brand-300">{g.title}</a></li>)}
+    </ul>
+  </aside>
+</Base>

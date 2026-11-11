@@ -1,3 +1,5 @@
+import { GUIAS } from './lib/guias.js'
+
 // Datos del sitio.
 export const SITE = {
   name: 'ToolBoxViral',
@@ -33,4 +35,7 @@ export const TOOLS = [
 ]
 
 /** Foto de cada página (public/img, fotos de Unsplash: ver CREDITOS-FOTOS.md). */
-export const photo = (path) => `/img/${path === '/' ? 'hero' : path.slice(1)}.webp`
+export const photo = (path) => {
+  if (path.startsWith('/guias')) return `/img/${GUIAS.find((g) => path.endsWith(g.slug))?.img ?? 'hero'}.webp`
+  return `/img/${path === '/' ? 'hero' : path.slice(1)}.webp`
+}

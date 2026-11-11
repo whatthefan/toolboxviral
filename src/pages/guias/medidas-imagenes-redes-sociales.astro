@@ -1,0 +1,48 @@
+---
+import Guia from '../../layouts/Guia.astro'
+
+const medidas = [
+  ['Instagram: post vertical', '1080 × 1350 px', '4:5', 'El formato que más ocupa en el feed'],
+  ['Instagram: post cuadrado', '1080 × 1080 px', '1:1', 'El clásico; ocupa menos pantalla'],
+  ['Instagram: Stories y Reels', '1080 × 1920 px', '9:16', 'Pantalla completa del móvil'],
+  ['TikTok', '1080 × 1920 px', '9:16', 'Vídeos y carruseles de fotos'],
+  ['YouTube Shorts', '1080 × 1920 px', '9:16', 'Vertical, como TikTok'],
+  ['YouTube: miniatura', '1280 × 720 px', '16:9', 'Menos de 2 MB, en JPG o PNG'],
+  ['Facebook o LinkedIn: imagen de enlace', '1200 × 630 px', '1,91:1', 'La que aparece al compartir una web'],
+  ['X (Twitter): imagen en un post', '1600 × 900 px', '16:9', 'Se ve entera sin recorte'],
+]
+---
+<Guia slug="medidas-imagenes-redes-sociales" description="Medidas y proporciones recomendadas en 2026 para Instagram (post, Stories, Reels), TikTok, YouTube (miniaturas y Shorts), Facebook, LinkedIn y X, y cómo evitar que recorten tu foto." relacionadas={['/redimensionar-imagen', '/convertir-imagen', '/quitar-fondo']} fuentes={[['Centro de ayuda de Instagram', 'https://help.instagram.com/'], ['Ayuda de YouTube: miniaturas personalizadas', 'https://support.google.com/youtube/answer/72431'], ['Centro de ayuda de TikTok', 'https://support.tiktok.com/es']]}>
+  <p>Cada red social muestra las imágenes con una forma distinta. Si subes una foto con la proporción equivocada, la plataforma la recorta a su manera, a veces cortando caras o el texto que habías puesto. Esta tabla reúne las medidas que funcionan bien en 2026.</p>
+
+  <h2>Tabla de medidas</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Dónde</th><th>Medida</th><th>Proporción</th><th>Nota</th></tr></thead>
+    <tbody>{medidas.map(([d, m, p, n]) => <tr><td>{d}</td><td>{m}</td><td>{p}</td><td>{n}</td></tr>)}</tbody>
+  </table></div>
+  <p>Lo importante es la <strong>proporción</strong> (4:5, 9:16, 16:9…). Si subes una imagen más grande con la misma proporción, la red la reduce sin recortarla. Si la proporción no coincide, la recorta.</p>
+
+  <h2>Las zonas seguras de Stories, Reels y TikTok</h2>
+  <p>En los formatos verticales, la interfaz tapa parte de la imagen: arriba, el nombre de la cuenta y la barra de progreso; abajo, la descripción, los botones y la caja de mensajes; a la derecha, los iconos de me gusta y compartir. Deja libres unos 250 px arriba y abajo y un margen a la derecha, y pon el texto importante en el centro.</p>
+
+  <h2>Instagram y la cuadrícula del perfil</h2>
+  <p>Desde 2025, la cuadrícula del perfil de Instagram muestra las miniaturas en vertical (3:4) en lugar de cuadradas. Un post de 4:5 se ve casi entero, pero los bordes de arriba y abajo se recortan ligeramente en la miniatura. Si cuidas mucho el aspecto de tu perfil, deja un poco de margen en esos bordes.</p>
+
+  <h2>Calidad: por qué tu foto se ve peor al subirla</h2>
+  <ul>
+    <li>Todas las redes vuelven a comprimir lo que subes. Si la foto es enorme, la reducen ellas con menos cuidado del que tendrías tú.</li>
+    <li>Sube la imagen <strong>ya al tamaño recomendado</strong> y con buena calidad (JPG al 85-90 % o PNG si tiene texto).</li>
+    <li>En el móvil, activa en los ajustes de la app la opción de subir en alta calidad si existe.</li>
+  </ul>
+
+  <h2>Cómo adaptar una foto en un minuto</h2>
+  <ol>
+    <li>Abre el <a href="/redimensionar-imagen">redimensionador para redes</a>.</li>
+    <li>Elige el formato (Reels, Story, post vertical, miniatura de YouTube…).</li>
+    <li>Escoge si quieres recortar la foto o encajarla entera con un fondo difuminado, y descárgala.</li>
+  </ol>
+  <p>Para un producto o un retrato con fondo limpio, puedes <a href="/quitar-fondo">quitar el fondo</a> antes y colocarlo sobre el color de tu marca.</p>
+
+  <h2>Las medidas cambian</h2>
+  <p>Las plataformas ajustan sus formatos de vez en cuando. Revisamos esta guía periódicamente, pero antes de una campaña importante comprueba la ayuda oficial de cada red.</p>
+</Guia>

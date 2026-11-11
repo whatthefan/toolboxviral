@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro'
+import { SITE } from '../../config.js'
+import { GUIAS } from '../../lib/guias.js'
+---
+<Base title={`Guías para fotos, formatos, redes sociales y contraseñas – ${SITE.name}`} description="Guías prácticas: qué es HEIC, qué formato de imagen usar, medidas para redes sociales en 2026 y cómo crear contraseñas seguras.">
+  <section class="bg-grid border-b border-stone-900/5 dark:border-white/5">
+    <div class="mx-auto max-w-5xl px-4 py-12">
+      <h1 class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Guías</h1>
+      <p class="mt-4 max-w-2xl text-lg text-stone-600 dark:text-stone-300">Lo que conviene saber antes de convertir, comprimir o publicar una imagen, y para proteger tus cuentas. Explicado con ejemplos y enlaces a las fuentes oficiales.</p>
+    </div>
+  </section>
+  <div class="mx-auto grid max-w-5xl gap-5 px-4 py-10 sm:grid-cols-2">
+    {GUIAS.map((g) => (
+      <a href={`/guias/${g.slug}`} class="group overflow-hidden rounded-3xl bg-white ring-1 ring-stone-900/10 transition hover:-translate-y-0.5 hover:shadow-xl dark:bg-white/5 dark:ring-white/10">
+        <img src={`/img/${g.img}.webp`} alt="" loading="lazy" class="aspect-[16/7] w-full object-cover" />
+        <div class="p-5">
+          <h2 class="font-display text-xl font-semibold tracking-tight group-hover:text-brand-700 dark:group-hover:text-brand-300">{g.title}</h2>
+          <p class="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-400">{g.blurb}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</Base>

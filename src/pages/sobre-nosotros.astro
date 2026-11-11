@@ -1,15 +1,35 @@
 ---
 import Legal from '../layouts/Legal.astro'
+import { SITE } from '../config.js'
+import { GUIAS } from '../lib/guias.js'
 ---
-<Legal title="Sobre nosotros" description="Quiénes somos y por qué creamos ToolBoxViral, herramientas gratis para fotos y textos de redes sociales." showUpdated={false}>
-  <p>ToolBoxViral nace para que cualquiera pueda preparar sus fotos y textos para redes sin pagar suscripciones ni instalar programas: quitar un fondo, pasar una foto del iPhone a JPG, adaptarla a Reels o contar las palabras de un guion.</p>
-  <p>Todas las herramientas funcionan en tu navegador. Tus archivos no se suben a ningún servidor, así que puedes usarlas con fotos privadas.</p>
+<Legal title="Sobre nosotros" description="Quién hace ToolBoxViral, cómo funcionan las herramientas sin subir tus archivos y cómo corregimos los errores." showUpdated={false}>
+  <p>ToolBoxViral nace para que cualquiera pueda preparar sus fotos y textos sin pagar suscripciones ni instalar programas: quitar un fondo, pasar una foto del iPhone a JPG, adaptarla a Reels o crear una contraseña segura.</p>
+
+  <h2>Quién está detrás</h2>
+  <p>ToolBoxViral es un proyecto independiente creado y mantenido por {SITE.owner}, desde Córdoba. La idea surgió al ver que muchas herramientas "gratis" de internet piden registrarse, ponen marca de agua o suben tus fotos a servidores desconocidos. Aquí todo funciona en tu propio navegador.</p>
+  <p>La web es gratuita y se financia con publicidad. No vendemos datos ni archivos, porque nunca los recibimos.</p>
+
+  <h2>Cómo funcionan las herramientas</h2>
+  <ul>
+    <li><strong>Todo en tu dispositivo</strong>: las conversiones, los recortes y los PDF se hacen con el procesador de tu móvil u ordenador. Tus imágenes y textos no se envían a ningún servidor, así que puedes usarlas con documentos personales.</li>
+    <li><strong>Quitar fondo</strong>: usa el modelo libre ISNet (licencia Apache 2.0), que se descarga una vez y se ejecuta en tu navegador con onnxruntime-web (licencia MIT).</li>
+    <li><strong>Contraseñas</strong>: se generan con el generador criptográfico del navegador (Web Crypto), no con números pseudoaleatorios corrientes.</li>
+    <li><strong>Detector de IA</strong>: analiza rasgos estadísticos del texto. Es orientativo: ningún detector es infalible, y así lo explicamos en la herramienta.</li>
+  </ul>
+
+  <h2>Guías</h2>
+  <p>Publicamos también <a href="/guias">guías</a>: {GUIAS.map((g, i) => <>{i > 0 && (i === GUIAS.length - 1 ? ' y ' : ', ')}<a href={`/guias/${g.slug}`}>{g.title.charAt(0).toLowerCase() + g.title.slice(1)}</a></>)}.</p>
+
   <h2>Nuestro compromiso</h2>
   <ul>
     <li><strong>Gratis, sin registro y sin marca de agua.</strong></li>
     <li><strong>Privacidad</strong>: tus imágenes y textos no salen de tu dispositivo.</li>
     <li><strong>Sencillez</strong>: arrastras, eliges y descargas.</li>
   </ul>
-  <p>Las fotos son de <a href="https://unsplash.com" rel="nofollow noopener" target="_blank">Unsplash</a> y el vídeo de <a href="https://mixkit.co" rel="nofollow noopener" target="_blank">Mixkit</a>, con sus licencias de uso libre. El recortador de fondos usa el modelo libre ISNet (licencia Apache 2.0) y onnxruntime-web (licencia MIT).</p>
-  <p>¿Echas en falta una herramienta? <a href="/contacto">Escríbenos</a>.</p>
+
+  <h2>Correcciones y sugerencias</h2>
+  <p>Si una herramienta falla con algún archivo o una medida de redes ha cambiado, dínoslo y lo revisamos. Escríbenos a <a href={`mailto:${SITE.email}`}>{SITE.email}</a> o desde la página de <a href="/contacto">contacto</a>.</p>
+
+  <p>Las fotos son de <a href="https://unsplash.com" rel="nofollow noopener" target="_blank">Unsplash</a> y el vídeo de <a href="https://mixkit.co" rel="nofollow noopener" target="_blank">Mixkit</a>, con sus licencias de uso libre.</p>
 </Legal>

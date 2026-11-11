@@ -1,0 +1,75 @@
+---
+import Guia from '../../layouts/Guia.astro'
+
+// Peso aproximado de una foto según su tamaño en píxeles y la calidad JPG (unos 0,15-0,25 bytes por píxel al 80 %)
+const tamanos = [
+  ['Foto original de móvil (12 Mpx, 4032 × 3024)', 4032, 3024],
+  ['Full HD (1920 × 1440)', 1920, 1440],
+  ['Redes sociales (1080 × 1350)', 1080, 1350],
+  ['Correo o web (1280 × 960)', 1280, 960],
+]
+const mb = (b) => (b / 1e6).toLocaleString('es-ES', { maximumFractionDigits: 1 })
+const kb = (b) => Math.round(b / 1000).toLocaleString('es-ES')
+const peso = (w, h) => w * h * 0.2
+---
+<Guia slug="jpg-png-o-webp" description="Diferencias entre JPG, PNG y WebP, cuál usar en cada caso y cómo reducir el peso de una foto para enviarla, subirla a una web o a una sede electrónica sin que se vea mal." relacionadas={['/convertir-imagen', '/redimensionar-imagen', '/imagen-a-pdf']} fuentes={[['Google for Developers: formato WebP', 'https://developers.google.com/speed/webp'], ['MDN: guía de tipos y formatos de imagen', 'https://developer.mozilla.org/es/docs/Web/Media/Formats/Image_types']]}>
+  <p>Elegir bien el formato de una imagen marca la diferencia entre un archivo de 5 MB y uno de 300 KB que se ve igual. Esto importa cuando una web te pone un límite de tamaño, cuando envías muchas fotos o cuando tu página tarda en cargar. Estos son los tres formatos que más vas a usar y cuándo conviene cada uno.</p>
+
+  <h2>JPG (o JPEG): para fotos</h2>
+  <ul>
+    <li>Comprime <strong>con pérdida</strong>: elimina detalles que el ojo apenas nota y consigue archivos pequeños.</li>
+    <li>Ideal para <strong>fotografías</strong>: paisajes, personas, productos.</li>
+    <li>No admite transparencia.</li>
+    <li>Lo abre absolutamente todo, por eso es el formato que piden casi todas las webs y trámites.</li>
+  </ul>
+
+  <h2>PNG: para gráficos, capturas y transparencias</h2>
+  <ul>
+    <li>Comprime <strong>sin pérdida</strong>: conserva cada píxel exactamente igual.</li>
+    <li>Ideal para <strong>logotipos, capturas de pantalla, textos e ilustraciones</strong> con colores planos, donde un JPG crearía manchas alrededor de las letras.</li>
+    <li>Admite <strong>fondo transparente</strong>: es el formato que necesitas al <a href="/quitar-fondo">quitar el fondo</a> de una imagen.</li>
+    <li>En fotos, pesa muchísimo más que un JPG: no lo uses para fotografías salvo que necesites transparencia.</li>
+  </ul>
+
+  <h2>WebP: lo mejor de los dos, para la web</h2>
+  <ul>
+    <li>Creado por Google, ofrece compresión con y sin pérdida, y transparencia.</li>
+    <li>Según Google, sus archivos son de un 25 a un 35 % más pequeños que un JPG de calidad similar.</li>
+    <li>Ideal para <strong>páginas web y tiendas online</strong>: cargan más rápido.</li>
+    <li>Todos los navegadores actuales lo admiten, pero algunos programas y formularios todavía no. Si una web te lo rechaza, <a href="/convertir/webp-a-jpg">pásalo a JPG</a>.</li>
+  </ul>
+
+  <h2>Resumen rápido</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Para…</th><th>Usa</th></tr></thead>
+    <tbody>
+      <tr><td>Una foto para un trámite, un formulario o un correo</td><td>JPG</td></tr>
+      <tr><td>Un logotipo, una captura o una imagen con texto</td><td>PNG</td></tr>
+      <tr><td>Una imagen sin fondo</td><td>PNG (o WebP)</td></tr>
+      <tr><td>Imágenes de tu web o tienda online</td><td>WebP</td></tr>
+      <tr><td>Fotos del iPhone que no se abren</td><td>Convierte de HEIC a JPG (<a href="/guias/que-es-heic">qué es HEIC</a>)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Cómo reducir el peso de una foto</h2>
+  <p>Lo que más influye en el peso no es el formato, sino el <strong>tamaño en píxeles</strong>. Una foto de móvil tiene unos 12 millones de píxeles, muchos más de los que necesita una pantalla. Pesos aproximados en JPG con calidad del 80 %:</p>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Tamaño</th><th>Peso aproximado</th></tr></thead>
+    <tbody>{tamanos.map(([t, w, h]) => <tr><td>{t}</td><td>{peso(w, h) > 1e6 ? `${mb(peso(w, h))} MB` : `${kb(peso(w, h))} KB`}</td></tr>)}</tbody>
+  </table></div>
+  <p>El peso real depende de la foto: una imagen con mucho detalle (hojas, arena) pesa más que una con zonas lisas (cielo, pared).</p>
+  <ol>
+    <li><strong>Reduce el tamaño</strong>: 1920 px de lado largo es suficiente para verla a pantalla completa; 1080 o 1280 px para redes, correo o formularios.</li>
+    <li><strong>Baja la calidad</strong> al 75-85 %: el ahorro es grande y la diferencia casi invisible.</li>
+    <li><strong>Usa el formato adecuado</strong>: una foto en PNG puede pesar cinco veces más que en JPG.</li>
+  </ol>
+  <p>Con el <a href="/convertir-imagen">conversor y compresor de imágenes</a> puedes hacer las tres cosas a la vez, con varias fotos y sin subirlas a ningún servidor.</p>
+
+  <h2>Fotos para sedes electrónicas y trámites</h2>
+  <p>Muchas sedes electrónicas y portales limitan el tamaño de cada archivo, a menudo a unos pocos megas, y solo aceptan JPG o PDF. Si tienes que adjuntar un documento escaneado con el móvil:</p>
+  <ul>
+    <li>Conviértelo a JPG si está en HEIC.</li>
+    <li>Redúcelo a unos 1600-2000 px de lado largo: el texto sigue leyéndose bien.</li>
+    <li>Si piden PDF, une las páginas con <a href="/imagen-a-pdf">imagen a PDF</a>. Si las fotos ya están reducidas, el PDF también será ligero.</li>
+  </ul>
+</Guia>

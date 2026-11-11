@@ -84,6 +84,10 @@ const canonical = new URL(here, Astro.site)
                   </div>
                 ))}
               </div>
+              <a href="/guias" class="mx-2 mt-1 mb-1 flex items-center gap-3 rounded-xl border-t border-stone-900/5 px-2 pt-3 pb-2 text-sm transition hover:bg-brand-50 dark:border-white/10 dark:hover:bg-white/5">
+                <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-gold-300/40 text-brand-800 dark:bg-brand-950 dark:text-gold-300"><Icon name="book-open" size={17} /></span>
+                <span><span class="block font-medium">Guías</span><span class="block text-xs text-stone-500 dark:text-stone-400">HEIC, formatos, medidas para redes, contraseñas</span></span>
+              </a>
             </div>
           </details>
         </div>
@@ -117,6 +121,7 @@ const canonical = new URL(here, Astro.site)
         <div class="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-6 text-xs text-brand-200/70 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {SITE.domain}</p>
           <nav aria-label="Información legal" class="flex flex-wrap gap-x-5 gap-y-2">
+            <a class="hover:text-white" href="/guias">Guías</a>
             <a class="hover:text-white" href="/sobre-nosotros">Sobre nosotros</a>
             <a class="hover:text-white" href="/contacto">Contacto</a>
             <a class="hover:text-white" href="/aviso-legal">Aviso legal</a>

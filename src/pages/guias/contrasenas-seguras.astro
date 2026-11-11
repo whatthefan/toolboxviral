@@ -1,0 +1,51 @@
+---
+import Guia from '../../layouts/Guia.astro'
+
+// Fuerza (entropía en bits) de contraseñas aleatorias: longitud × log2(tamaño del alfabeto)
+const bits = (len, alfabeto) => Math.round(len * Math.log2(alfabeto))
+const filas = [
+  ['8 caracteres, solo minúsculas', bits(8, 26)],
+  ['8 caracteres, mayúsculas, minúsculas, números y símbolos', bits(8, 94)],
+  ['12 caracteres, mayúsculas, minúsculas, números y símbolos', bits(12, 94)],
+  ['16 caracteres, mayúsculas, minúsculas, números y símbolos', bits(16, 94)],
+  ['4 palabras al azar de una lista de 7.776', bits(4, 7776)],
+  ['6 palabras al azar de una lista de 7.776', bits(6, 7776)],
+]
+---
+<Guia slug="contrasenas-seguras" description="Qué hace segura una contraseña según las recomendaciones actuales (NIST, INCIBE), por qué la longitud importa más que los símbolos, frases de contraseña, gestores y verificación en dos pasos." relacionadas={['/generador-de-contrasenas', '/generador-qr']} fuentes={[['NIST SP 800-63B: directrices de identidad digital (autenticación)', 'https://pages.nist.gov/800-63-4/sp800-63b.html'], ['INCIBE: Oficina de Seguridad del Internauta, contraseñas', 'https://www.incibe.es/ciudadania/tematicas/contrasenas'], ['Have I Been Pwned: comprobar filtraciones', 'https://haveibeenpwned.com/']]}>
+  <p>La mayoría de las cuentas robadas no caen por un ataque sofisticado, sino por contraseñas cortas, repetidas o filtradas en otra web. La buena noticia es que protegerse es más fácil de lo que parece, y las recomendaciones actuales son más sencillas que las de hace unos años.</p>
+
+  <h2>Lo que de verdad hace segura una contraseña</h2>
+  <ul>
+    <li><strong>Longitud</strong>: es lo que más cuenta. El NIST, el organismo de referencia de EE. UU., recomienda al menos 15 caracteres cuando la contraseña es la única protección.</li>
+    <li><strong>Que sea aleatoria</strong>: nada de nombres, fechas, equipos o palabras con números al final ("Barcelona2026!"). Es lo primero que prueban los programas de ataque.</li>
+    <li><strong>Que sea única</strong>: una contraseña distinta para cada servicio. Si se filtra una, el resto siguen a salvo.</li>
+    <li><strong>Que no esté filtrada</strong>: comprueba tu correo en Have I Been Pwned para saber si alguna de tus cuentas apareció en una filtración.</li>
+  </ul>
+
+  <h2>Longitud frente a símbolos</h2>
+  <p>La fuerza de una contraseña aleatoria se mide en bits: cada bit más duplica el número de intentos necesarios para adivinarla. Fíjate en cómo influye la longitud:</p>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Tipo de contraseña</th><th>Fuerza aproximada</th></tr></thead>
+    <tbody>{filas.map(([t, b]) => <tr><td>{t}</td><td>{b} bits</td></tr>)}</tbody>
+  </table></div>
+  <p>Una contraseña de 16 caracteres aleatorios es mucho más fuerte que una de 8 con símbolos. Hoy se considera razonable a partir de unos 70-80 bits para cuentas importantes. Estos valores solo valen para contraseñas generadas al azar: una que inventas tú tiene mucha menos fuerza real, porque las personas somos previsibles.</p>
+
+  <h2>Frases de contraseña: seguras y fáciles de recordar</h2>
+  <p>Para las pocas contraseñas que tienes que memorizar (la del gestor de contraseñas, la del ordenador), una buena opción es una frase de 5 o 6 palabras elegidas al azar, como "tejado-lunes-brújula-pera-lento-río". Es larga, aleatoria y mucho más fácil de recordar que "X7#kQ2!m". La clave es que las palabras las elija el azar, no tú.</p>
+
+  <h2>Usa un gestor de contraseñas</h2>
+  <p>Nadie puede recordar decenas de contraseñas únicas de 16 caracteres. Un gestor (el de tu navegador, el del móvil o uno independiente) las crea, las guarda cifradas y las rellena por ti. Solo tienes que recordar una contraseña maestra, que debe ser muy fuerte.</p>
+
+  <h2>Activa la verificación en dos pasos</h2>
+  <p>Con la verificación en dos pasos, aunque alguien tenga tu contraseña, necesita además un código de tu móvil o una llave física. Actívala al menos en el correo, el banco y las redes sociales. Las <strong>llaves de acceso</strong> (passkeys), que ya ofrecen Google, Apple, Microsoft y muchas webs, van un paso más allá: sustituyen la contraseña por el desbloqueo del móvil y no se pueden robar con una web falsa.</p>
+
+  <h2>Recomendaciones que ya no se siguen</h2>
+  <ul>
+    <li><strong>Cambiar la contraseña cada pocos meses</strong>: solo hace falta si sospechas que se ha filtrado. Los cambios obligatorios llevan a contraseñas peores.</li>
+    <li><strong>Exigir un símbolo y una mayúscula</strong>: no hace daño, pero la longitud protege mucho más.</li>
+    <li><strong>Preguntas de seguridad</strong> ("¿nombre de tu mascota?"): sus respuestas son fáciles de averiguar. Si una web te obliga, inventa una respuesta y guárdala en el gestor.</li>
+  </ul>
+
+  <p>Crea una contraseña aleatoria con el <a href="/generador-de-contrasenas">generador de contraseñas</a>. Se genera en tu propio dispositivo y no se envía a ningún sitio.</p>
+</Guia>

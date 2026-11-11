@@ -3,6 +3,7 @@ import Base from './Base.astro'
 import AdSlot from '../components/AdSlot.astro'
 import Icon from '../components/Icon.astro'
 import { TOOLS, CATEGORIAS, ADSENSE, photo } from '../config.js'
+import { GUIAS } from '../lib/guias.js'
 
 const { title, description, h1, intro, faq = [], updated = 'Gratis, sin marca de agua', ruta } = Astro.props
 const sidebar = (ADSENSE.client && ADSENSE.slots.sidebar) || import.meta.env.DEV
@@ -28,6 +29,13 @@ const schema = [
   },
 ].filter(Boolean)
 const width = sidebar ? 'max-w-6xl' : 'max-w-4xl'
+// Guías relacionadas con cada herramienta
+const GUIAS_POR_HERRAMIENTA = {
+  '/convertir-imagen': ['que-es-heic', 'jpg-png-o-webp'], '/redimensionar-imagen': ['medidas-imagenes-redes-sociales', 'jpg-png-o-webp'],
+  '/quitar-fondo': ['jpg-png-o-webp', 'medidas-imagenes-redes-sociales'], '/imagen-a-pdf': ['jpg-png-o-webp', 'que-es-heic'],
+  '/generador-de-contrasenas': ['contrasenas-seguras'], '/generador-qr': ['contrasenas-seguras'], '/detector-de-ia': ['medidas-imagenes-redes-sociales'],
+}
+const guias = (GUIAS_POR_HERRAMIENTA[actual?.path] ?? []).map((s) => GUIAS.find((g) => g.slug === s)).filter(Boolean)
 ---
 <Base title={title} description={description}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
@@ -113,6 +121,15 @@ const width = sidebar ? 'max-w-6xl' : 'max-w-4xl'
           </div>
           <a href="/#herramientas" class="mt-6 inline-flex items-center gap-1.5 font-semibold text-brand-700 dark:text-brand-300">Ver todas las herramientas <Icon name="arrow-right" size={16} /></a>
         </section>
+
+        {guias.length > 0 && (
+          <section class="mt-10">
+            <h2 class="font-display text-2xl font-semibold tracking-tight">Guías relacionadas</h2>
+            <ul class="mt-4 space-y-2">
+              {guias.map((g) => <li><a href={`/guias/${g.slug}`} class="inline-flex items-center gap-2 font-semibold text-brand-700 hover:underline dark:text-brand-300"><Icon name="book-open" size={16} />{g.title}</a></li>)}
+            </ul>
+          </section>
+        )}
 
         <p class="mt-8 flex gap-3 rounded-2xl sm:mt-10 bg-stone-900/[0.03] p-4 text-xs leading-relaxed text-stone-500 dark:bg-white/5 dark:text-stone-400">
           <Icon name="info" size={16} class="mt-0.5 shrink-0" />

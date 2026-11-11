@@ -1,0 +1,36 @@
+---
+import Guia from '../../layouts/Guia.astro'
+---
+<Guia slug="que-es-heic" description="Qué es el formato HEIC de las fotos del iPhone, por qué da problemas en Windows, webs y sedes electrónicas, y cómo convertir HEIC a JPG gratis y sin perder calidad." relacionadas={['/convertir-imagen', '/imagen-a-pdf', '/redimensionar-imagen']} fuentes={[['Apple: usar imágenes HEIF o HEVC en dispositivos Apple', 'https://support.apple.com/es-es/'], ['ISO/IEC 23008-12: estándar HEIF', 'https://www.iso.org/']]}>
+  <p>Si tienes un iPhone, casi todas tus fotos se guardan con la extensión <strong>.HEIC</strong>. En el propio móvil se ven perfectamente, pero al pasarlas al ordenador, subirlas a una web o adjuntarlas en un trámite, a veces no se abren o te piden "JPG o PNG". Te explicamos qué es este formato y cómo solucionarlo en un minuto.</p>
+
+  <h2>Qué es HEIC</h2>
+  <p>HEIC es la versión de Apple del formato <strong>HEIF</strong> (High Efficiency Image Format), un estándar internacional. Apple lo usa por defecto desde 2017 (iOS 11) porque guarda la misma calidad que un JPG ocupando aproximadamente la mitad. Con miles de fotos en el móvil, eso es mucho espacio ahorrado.</p>
+  <p>Además, un archivo HEIC puede guardar cosas que un JPG no: varias imágenes (las Live Photos o las ráfagas), información de profundidad del modo retrato y más gama de color.</p>
+
+  <h2>Dónde da problemas</h2>
+  <ul>
+    <li><strong>Windows</strong>: los ordenadores con Windows no siempre lo abren de serie. Necesitan las extensiones de imagen HEIF y de vídeo HEVC de Microsoft Store, y la segunda puede ser de pago.</li>
+    <li><strong>Webs y formularios</strong>: muchas webs solo aceptan JPG o PNG, entre ellas buena parte de las sedes electrónicas de la Administración, portales de empleo y tiendas online.</li>
+    <li><strong>Programas antiguos</strong> de edición o de impresión.</li>
+    <li><strong>Algunos móviles Android</strong> antiguos.</li>
+  </ul>
+  <p>Cuando envías una foto desde el iPhone por WhatsApp, por correo o con AirDrop a un dispositivo que no lo admite, iOS suele convertirla a JPG automáticamente. El problema aparece sobre todo cuando copias los archivos por cable o desde iCloud.</p>
+
+  <h2>Cómo convertir HEIC a JPG</h2>
+  <ol>
+    <li>Abre el <a href="/convertir/heic-a-jpg">conversor de HEIC a JPG</a> desde el móvil o el ordenador.</li>
+    <li>Arrastra las fotos o elígelas de tu galería. Puedes convertir hasta 30 a la vez.</li>
+    <li>Elige la calidad (un 85-90 % es prácticamente igual al original) y descárgalas.</li>
+  </ol>
+  <p>La conversión se hace en tu propio navegador: las fotos no se suben a ningún servidor, algo importante si son documentos personales como el DNI o una receta médica.</p>
+  <p>Si necesitas fondo transparente, por ejemplo para un logotipo, convierte a <a href="/convertir/heic-a-png">PNG</a> en lugar de JPG.</p>
+
+  <h2>Cómo hacer que el iPhone guarde las fotos en JPG</h2>
+  <p>Si prefieres evitar el problema desde el principio, ve a <strong>Ajustes &gt; Cámara &gt; Formatos</strong> y elige <strong>Más compatible</strong>. A partir de ahí las fotos nuevas se guardarán en JPG (las anteriores siguen en HEIC). A cambio, ocuparán bastante más espacio.</p>
+  <p>Otra opción es dejar HEIC activado y, en <strong>Ajustes &gt; Fotos</strong>, en "Transferir a Mac o PC", marcar <strong>Automático</strong>: el iPhone convertirá las fotos a JPG cuando las pases por cable a un ordenador.</p>
+
+  <h2>¿Se pierde calidad al convertir?</h2>
+  <p>JPG comprime con pérdida, así que en teoría sí, pero con una calidad alta la diferencia no se aprecia a simple vista. Lo que sí se pierde es lo que JPG no puede guardar: el movimiento de las Live Photos y los datos de profundidad. Si quieres conservarlo todo, guarda también los originales en HEIC.</p>
+  <p>Si la foto es para un trámite con límite de tamaño, después de convertirla puedes reducir su peso. Te explicamos cómo en <a href="/guias/jpg-png-o-webp">JPG, PNG o WebP: qué formato usar y cómo reducir el peso</a>.</p>
+</Guia>
