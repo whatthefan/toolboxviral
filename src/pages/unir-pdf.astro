@@ -1,0 +1,33 @@
+---
+import ToolPage from '../layouts/ToolPage.astro'
+import UnirPdf from '../components/tools/UnirPdf.jsx'
+
+const faq = [
+  ['¿Cómo uno varios PDF en uno?', 'Arrastra o elige los PDF, ordénalos con las flechas y pulsa «Unir y descargar». Obtendrás un solo PDF con todas las páginas en el orden que hayas puesto.'],
+  ['¿Se suben mis documentos a internet?', 'No. Los PDF se unen en tu propio navegador, así que no salen de tu móvil u ordenador. Puedes usarlo con nóminas, contratos o documentos de identidad.'],
+  ['¿Funciona en el móvil?', 'Sí, en Android y iPhone. Toca el recuadro, elige los PDF de tus archivos o de tu nube y descarga el resultado.'],
+  ['¿Hay límite de archivos o de tamaño?', 'Puedes unir hasta 40 PDF de una vez. El límite de tamaño lo pone la memoria de tu dispositivo: en móviles, mejor no pasar de unos 100 MB en total.'],
+  ['¿Puedo unir PDF protegidos con contraseña?', 'Normalmente no: si un PDF está cifrado, quita la protección con la contraseña en tu lector de PDF antes de unirlo.'],
+]
+---
+<ToolPage
+  title="Unir PDF gratis: juntar varios PDF en uno, sin subir archivos – ToolBoxViral"
+  description="Une varios PDF en un solo archivo gratis, en el móvil o el ordenador. Ordena los archivos y descarga el PDF al momento, sin registro, sin marca de agua y sin subir tus documentos."
+  h1="Unir PDF"
+  intro="Junta varios PDF en uno en segundos. Ordénalos como quieras y descarga el resultado, sin que tus documentos salgan de tu dispositivo."
+  faq={faq}
+>
+  <UnirPdf slot="calc" client:only="react" />
+
+  <h2>Cómo unir archivos PDF</h2>
+  <ol>
+    <li>Toca el recuadro o arrastra tus PDF. Puedes añadir más en cualquier momento.</li>
+    <li>Ordénalos con las flechas; el número indica el orden final.</li>
+    <li>Pulsa «Unir y descargar». El archivo se llama «unido.pdf».</li>
+  </ol>
+  <h2>Para qué sirve</h2>
+  <p>Para entregar en un solo archivo la documentación que piden una sede electrónica, una gestoría, el banco o una oferta de empleo: DNI, nóminas, contratos, certificados. Muchos formularios solo dejan adjuntar un archivo, y unirlos evita enviar diez correos.</p>
+  <p>Si lo que tienes son fotos de un documento, conviértelas primero con <a href="/imagen-a-pdf">imagen a PDF</a>. Y si las fotos pesan mucho, redúcelas con el <a href="/convertir-imagen">conversor de imágenes</a>; te lo explicamos en <a href="/guias/jpg-png-o-webp">JPG, PNG o WebP y cómo reducir el peso</a>.</p>
+  <h2>Privacidad</h2>
+  <p>Otras webs para unir PDF suben tus documentos a sus servidores. Aquí todo ocurre en tu navegador con una librería de código abierto (pdf-lib): por eso funciona incluso sin conexión una vez cargada la página.</p>
+</ToolPage>

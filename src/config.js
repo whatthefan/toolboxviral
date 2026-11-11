@@ -28,6 +28,7 @@ export const TOOLS = [
   { cat: 0, nav: true, path: '/quitar-fondo', label: 'Quitar fondo', title: 'Quitar el fondo de una imagen', icon: 'scissors', blurb: 'Elimina el fondo de cualquier foto en un segundo y descárgala en PNG transparente.' },
   { cat: 0, nav: true, path: '/convertir-imagen', label: 'Convertir imagen', title: 'Convertir y comprimir imágenes', icon: 'repeat', blurb: 'Pasa de HEIC, PNG o WebP a JPG (y al revés) y reduce el peso, varias a la vez.' },
   { cat: 0, nav: true, path: '/redimensionar-imagen', label: 'Tamaños para redes', title: 'Redimensionar para redes sociales', icon: 'crop', blurb: 'Adapta tus fotos a Reels, TikTok, Stories, Instagram y miniaturas de YouTube.' },
+  { cat: 0, nav: true, path: '/unir-pdf', label: 'Unir PDF', title: 'Unir PDF', icon: 'files', blurb: 'Junta varios PDF en uno, ordénalos y descárgalo. Sin subir tus documentos.' },
   { cat: 0, path: '/imagen-a-pdf', label: 'Imagen a PDF', title: 'Convertir imagen a PDF', icon: 'file-image', blurb: 'Une una o varias fotos en un PDF, ordénalas y descárgalo al momento.' },
   { cat: 1, nav: true, path: '/detector-de-ia', label: 'Detector de IA', title: 'Detector de textos hechos con IA', icon: 'scan-text', blurb: 'Qué probabilidad hay de que un texto esté escrito con IA, y por qué. Con contador de palabras.' },
   { cat: 1, path: '/generador-qr', label: 'Generador QR', title: 'Generador de códigos QR', icon: 'qr-code', blurb: 'QR para tu web, tu WiFi o tu teléfono. Sin caducidad y en alta calidad.' },
@@ -36,6 +37,7 @@ export const TOOLS = [
 
 /** Foto de cada página (public/img, fotos de Unsplash: ver CREDITOS-FOTOS.md). */
 export const photo = (path) => {
+  if (path === '/unir-pdf') return '/img/imagen-a-pdf.webp'
   if (path.startsWith('/guias')) return `/img/${GUIAS.find((g) => path.endsWith(g.slug))?.img ?? 'hero'}.webp`
   return `/img/${path === '/' ? 'hero' : path.slice(1)}.webp`
 }
