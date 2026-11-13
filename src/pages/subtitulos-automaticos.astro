@@ -1,0 +1,68 @@
+---
+import ToolPage from '../layouts/ToolPage.astro'
+import SubtitulosIA from '../components/tools/SubtitulosIA.jsx'
+
+const faq = [
+  ['¿Mi vídeo se sube a algún servidor?', 'No. El vídeo no sale de tu dispositivo: la transcripción y la detección de sonidos se hacen en tu propio navegador. Solo se descargan los modelos de IA la primera vez, y quedan guardados para las siguientes.'],
+  ['¿Es gratis? ¿Tiene límite de minutos?', 'Es gratis y sin límite de archivos ni de minutos, sin registro y sin marca de agua. Como el trabajo lo hace tu dispositivo, no nos cuesta nada por minuto y no tenemos que ponerte topes.'],
+  ['¿Qué son los subtítulos con sonidos o SDH?', 'Son los subtítulos pensados para personas sordas o con pérdida auditiva (SDH, por sus siglas en inglés). Además de lo que se dice, describen entre corchetes los sonidos importantes: [risas], [aplausos], [música], [puerta], [teléfono sonando]… Es lo que ves en la tele cuando activas los subtítulos para sordos.'],
+  ['¿Qué sonidos reconoce?', 'Más de 40 tipos: risas, aplausos, vítores, gritos, llanto, tos, música, canto, perros, gatos, pájaros, timbre, golpes en la puerta, teléfono, alarma, sirena, claxon, disparos, explosiones, fuegos artificiales, truenos, lluvia, viento, cristales rotos, pasos, tecleo, motores, tren, avión y helicóptero, entre otros.'],
+  ['¿Cuánto tarda?', 'Con un ordenador con tarjeta gráfica moderna, un vídeo de 10 minutos suele estar en uno o dos minutos. Sin tarjeta gráfica, o en el móvil, puede tardar más que lo que dura el vídeo; en ese caso usa la calidad Rápida. La primera vez hay que sumar la descarga de los modelos (de 60 a 270 MB según la calidad).'],
+  ['¿En qué idiomas funciona?', 'Reconoce español, inglés, catalán, gallego, portugués, francés, alemán, italiano y muchos más, y puede detectar el idioma solo. También puede traducir los subtítulos al inglés directamente.'],
+  ['¿Cómo subo los subtítulos a YouTube, Instagram o TikTok?', 'En YouTube Studio, entra en Subtítulos, elige Añadir y sube el archivo SRT. En CapCut, Premiere Pro o DaVinci Resolve puedes importar el SRT como pista de subtítulos. Instagram y TikTok no admiten archivos SRT: ahí tienes que pegar el texto con su editor de subtítulos o grabarlos en el vídeo con un editor.'],
+  ['¿Puedo corregir los errores?', 'Sí. Cuando termina, cada frase se puede editar directamente en la lista. Pulsa la hora de cualquier línea para saltar a ese momento del vídeo y comprobarlo. Si un sonido no te convence, toca su etiqueta para quitarlo de todos los subtítulos.'],
+]
+---
+<ToolPage
+  title="Subtítulos automáticos gratis con IA, con sonidos [risas] [aplausos] – ToolBoxViral"
+  description="Crea subtítulos de cualquier vídeo o audio con IA, gratis y sin límite. Además de la voz, detecta los sonidos ([risas], [aplausos], [música]) como en la tele. SRT y VTT. Sin subir tu vídeo."
+  h1="Subtítulos automáticos con IA que también oyen los sonidos"
+  intro="Sube un vídeo o un audio y la IA escribe lo que se dice y marca los sonidos importantes, como [risas], [aplausos] o [música], igual que los subtítulos para sordos de la tele. Todo se hace en tu dispositivo, sin subir el vídeo y sin límite de minutos."
+  faq={faq}
+>
+  <SubtitulosIA slot="calc" client:only="react" />
+
+  <h2>Cómo crear subtítulos automáticos</h2>
+  <ol>
+    <li>Arrastra tu vídeo o audio al recuadro (MP4, MOV, WebM, MP3, M4A, WAV…).</li>
+    <li>Elige el idioma, o deja que lo detecte solo, y la calidad. La Equilibrada va bien para casi todo.</li>
+    <li>Pulsa <strong>Crear subtítulos</strong>. Primero se escuchan los sonidos y después se transcribe la voz. Los subtítulos van apareciendo mientras tanto.</li>
+    <li>Revisa el resultado sobre el propio vídeo, corrige lo que quieras y descarga el archivo SRT o VTT.</li>
+  </ol>
+
+  <h2>Qué tiene de especial: subtítulos que oyen</h2>
+  <p>Casi todas las herramientas de subtítulos automáticos solo escriben la voz. Las que permiten poner etiquetas de sonido obligan a añadirlas a mano, una por una. Aquí se hace solo: un segundo modelo de IA escucha el vídeo entero y reconoce cientos de tipos de sonido.</p>
+  <p>Así consigues <strong>subtítulos para personas sordas (SDH)</strong> sin trabajo extra. Además, los subtítulos se entienden mejor cuando el vídeo se ve sin volumen, que es como se ven la mayoría de vídeos en redes.</p>
+  <ul>
+    <li>Si el sonido coincide con alguien hablando, va delante de la frase: <em>[risas] No me lo puedo creer.</em></li>
+    <li>Si no habla nadie, sale como subtítulo propio: <em>[aplausos]</em>.</li>
+    <li>La música solo se marca si dura varios segundos, para no llenar los subtítulos de avisos.</li>
+    <li>Con la <strong>sensibilidad</strong> decides si quieres solo los sonidos más claros o también los más suaves.</li>
+  </ul>
+
+  <h2>También evita los textos inventados</h2>
+  <p>Los programas de transcripción a veces se inventan frases en los silencios o en la música, como «Subtítulos realizados por la comunidad». Aquí, el detector de sonidos sabe en qué momentos se oye una voz, así que esos trozos se saltan y no aparecen frases fantasma.</p>
+
+  <h2>SRT, VTT o texto: qué formato elegir</h2>
+  <ul>
+    <li><strong>SRT</strong>: el más compatible. Sirve para YouTube, Vimeo, Facebook, LinkedIn, CapCut, Premiere Pro, DaVinci Resolve, Final Cut y reproductores como VLC.</li>
+    <li><strong>VTT</strong> (WebVTT): el estándar de las webs. Úsalo si vas a poner el vídeo en tu propia página con la etiqueta <code>&lt;track&gt;</code>.</li>
+    <li><strong>Texto</strong>: la transcripción sin tiempos, para un artículo, la descripción del vídeo o tus apuntes.</li>
+  </ul>
+  <p>Puedes descargar cada formato con los sonidos o solo con la voz: desmarca <strong>Incluir los sonidos</strong> antes de descargar.</p>
+
+  <h2>¿Quién está obligado a subtitular sus vídeos?</h2>
+  <p>En España, la Ley General de Comunicación Audiovisual obliga a las televisiones a subtitular buena parte de su programación, y la normativa de accesibilidad web exige que los vídeos de las administraciones públicas tengan subtítulos. En Estados Unidos, la ley de accesibilidad ADA obliga a ayuntamientos, colegios y universidades públicas a subtitular sus vídeos. Aunque no estés obligado, los subtítulos hacen que más gente vea tus vídeos hasta el final.</p>
+  <p>Esta herramienta es un primer borrador de gran calidad, pero conviene repasarlo antes de publicar, sobre todo nombres propios y términos técnicos.</p>
+
+  <h2>Consejos para que salgan mejor</h2>
+  <ul>
+    <li>Elige el idioma del vídeo en vez de «Detectar solo» si sabes cuál es: acierta más y va más rápido.</li>
+    <li>Si hay mucha música de fondo o varias personas hablando a la vez, usa la calidad Precisa.</li>
+    <li>En el móvil, usa la calidad Rápida y vídeos de pocos minutos.</li>
+    <li>Para vídeos de más de una hora, mejor en el ordenador.</li>
+  </ul>
+
+  <h2>Tecnología y privacidad</h2>
+  <p>La voz se transcribe con <strong>Whisper</strong> (OpenAI, licencia MIT) y los sonidos se reconocen con <strong>YAMNet</strong> (Google, licencia Apache 2.0), un modelo entrenado con millones de fragmentos de audio de 521 tipos distintos. Los dos funcionan dentro de tu navegador gracias a WebGPU y WebAssembly. Tu vídeo no se envía a ningún sitio: puedes comprobarlo desconectando internet una vez descargados los modelos.</p>
+</ToolPage>

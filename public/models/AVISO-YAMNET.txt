@@ -1,0 +1,4 @@
+yamnet-v1.bin es YAMNet (Google, licencia Apache 2.0), convertido a ONNX con tf2onnx
+por audiomagic/yamnet-onnx (Hugging Face) y comprimido con gzip. No se ha cambiado ningún peso.
+Original: https://www.kaggle.com/models/google/yamnet
+Licencia: https://www.apache.org/licenses/LICENSE-2.0

@@ -11,6 +11,8 @@ Fotos de [Unsplash](https://unsplash.com) (Licencia Unsplash: uso libre, tambié
 - public/img/generador-qr.webp: https://images.unsplash.com/photo-1595079676339-1534801ad6cf
 - public/img/generador-de-contrasenas.webp: https://images.unsplash.com/photo-1614064641938-3bbee52942c7
 
+- public/img/subtitulos-automaticos.webp: ilustración propia (generada con código).
+
 ## Vídeo de la portada
 
 - public/video/hero.mp4: «Lens taking photos», Mixkit (https://mixkit.co/free-stock-video/lens-taking-photos-2373/), Mixkit Stock Video Free License.

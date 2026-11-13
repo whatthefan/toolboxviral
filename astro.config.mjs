@@ -8,5 +8,5 @@ export default defineConfig({
   trailingSlash: 'never',
   build: { format: 'file' },
   integrations: [react(), sitemap()],
-  vite: { plugins: [tailwindcss()] },
+  vite: { plugins: [tailwindcss()], worker: { format: 'es' } },
 })
