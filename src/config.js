@@ -31,6 +31,8 @@ export const TOOLS = [
   { cat: 0, path: '/unir-pdf', label: 'Unir PDF', title: 'Unir PDF', icon: 'files', blurb: 'Junta varios PDF en uno, ordénalos y descárgalo. Sin subir tus documentos.' },
   { cat: 0, path: '/imagen-a-pdf', label: 'Imagen a PDF', title: 'Convertir imagen a PDF', icon: 'file-image', blurb: 'Une una o varias fotos en un PDF, ordénalas y descárgalo al momento.' },
   { cat: 2, nav: true, path: '/subtitulos-automaticos', label: 'Subtítulos', title: 'Subtítulos automáticos con sonidos', icon: 'captions', blurb: 'Subtítulos de cualquier vídeo en minutos, con los sonidos marcados: [risas], [aplausos], [música]. SRT y VTT.' },
+  { cat: 2, path: '/comprimir-video', label: 'Comprimir vídeo', title: 'Comprimir vídeo sin perder calidad', icon: 'file-video', blurb: 'Reduce el peso de un vídeo para WhatsApp, Discord o el correo. Eliges los MB y listo.' },
+  { cat: 2, path: '/video-a-mp3', label: 'Vídeo a MP3', title: 'Convertir vídeo a MP3', icon: 'music', blurb: 'Saca el sonido de cualquier vídeo en MP3, entero o solo un trozo para un tono de llamada.' },
   { cat: 1, nav: true, path: '/detector-de-ia', label: 'Detector de IA', title: 'Detector de textos hechos con IA', icon: 'scan-text', blurb: 'Qué probabilidad hay de que un texto esté escrito con IA, y por qué. Con contador de palabras.' },
   { cat: 1, path: '/generador-qr', label: 'Generador QR', title: 'Generador de códigos QR', icon: 'qr-code', blurb: 'QR para tu web, tu WiFi o tu teléfono. Sin caducidad y en alta calidad.' },
   { cat: 1, path: '/generador-de-contrasenas', label: 'Contraseñas', title: 'Generador de contraseñas seguras', icon: 'key-round', blurb: 'Contraseñas aleatorias y seguras en un clic, creadas en tu dispositivo.' },

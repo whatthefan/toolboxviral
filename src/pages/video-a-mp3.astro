@@ -1,0 +1,54 @@
+---
+import ToolPage from '../layouts/ToolPage.astro'
+import VideoAMp3 from '../components/tools/VideoAMp3.jsx'
+
+const faq = [
+  ['¿Se sube mi vídeo a algún servidor?', 'No. El sonido se extrae dentro de tu navegador. Tu vídeo no se envía a ningún sitio y nadie más lo ve.'],
+  ['¿Qué calidad elijo?', 'Para voz (clases, podcasts, notas de voz) basta con 128 kbps. Para música, 192 kbps suena igual que el original para casi todo el mundo. 320 kbps es el máximo del MP3 y ocupa el doble que 160.'],
+  ['¿Puedo sacar solo un trozo, por ejemplo para un tono de llamada?', 'Sí. Marca «Quedarme solo con un trozo», reproduce el vídeo y pulsa «Usar el momento actual» en Desde y en Hasta. Para un tono de llamada, lo normal son 20 a 30 segundos.'],
+  ['¿Sirve para vídeos de YouTube o TikTok?', 'Funciona con vídeos que ya tienes en tu dispositivo: grabaciones tuyas, vídeos que te han enviado o los que descargas desde la propia app con su opción de guardar. No descarga vídeos de otras webs, porque sus condiciones no lo permiten y muchos tienen derechos de autor.'],
+  ['¿Qué formatos acepta?', 'Los que pueda leer tu navegador: MP4, MOV, WebM, MKV, M4A, WAV, OGG y más. También sirve para pasar un audio M4A o WAV a MP3.'],
+  ['¿Funciona en el iPhone?', 'Sí, con Safari actualizado. Al descargar, el MP3 se guarda en la app Archivos.'],
+]
+---
+<ToolPage
+  title="Convertir vídeo a MP3 gratis, sin subirlo – ToolBoxViral"
+  description="Saca el audio de cualquier vídeo en MP3 en segundos: entero o solo un trozo para un tono de llamada. Calidad de 128 a 320 kbps. Gratis, sin registro y sin subir el vídeo."
+  h1="Convertir vídeo a MP3"
+  intro="Elige un vídeo y llévate su sonido en MP3: entero o solo el trozo que quieras. Se convierte en tu dispositivo, sin subirlo, en unos segundos."
+  faq={faq}
+>
+  <VideoAMp3 slot="calc" client:only="react" />
+
+  <h2>Cómo pasar un vídeo a MP3</h2>
+  <ol>
+    <li>Arrastra el vídeo al recuadro o haz clic para elegirlo.</li>
+    <li>Elige la calidad: Normal para voz, Alta para música o Máxima.</li>
+    <li>Si solo quieres una parte, marca la opción de recortar y elige desde y hasta dónde.</li>
+    <li>Pulsa <strong>Convertir a MP3</strong>, escúchalo y descárgalo.</li>
+  </ol>
+
+  <h2>Para qué se usa</h2>
+  <ul>
+    <li><strong>Tonos de llamada y alarmas</strong> con el trozo de una canción que hayas grabado.</li>
+    <li><strong>Escuchar una clase o una charla</strong> sin pantalla, como si fuera un podcast.</li>
+    <li><strong>Notas de voz</strong>: un vídeo de un minuto pesa unos 10 MB y su MP3 a 128 kbps, menos de 1 MB.</li>
+    <li><strong>Editar audio</strong> en Audacity, GarageBand o CapCut a partir del sonido de un vídeo.</li>
+    <li><strong>Transcribir</strong>: si lo que quieres es el texto, mejor usa los <a href="/subtitulos-automaticos">subtítulos automáticos con IA</a>, que también sirven para audios.</li>
+  </ul>
+
+  <h2>Cuánto ocupa un MP3</h2>
+  <p>Un MP3 ocupa siempre lo mismo por minuto según su calidad, sin importar lo que suene:</p>
+  <ul>
+    <li>128 kbps: casi 1 MB por minuto.</li>
+    <li>192 kbps: unos 1,4 MB por minuto.</li>
+    <li>320 kbps: unos 2,3 MB por minuto.</li>
+  </ul>
+  <p>Subir la calidad por encima de la del vídeo original no la mejora. La mayoría de vídeos de móvil llevan sonido AAC a 128 o 256 kbps, así que 192 kbps es un buen punto medio.</p>
+
+  <h2>Derechos de autor</h2>
+  <p>Usa esta herramienta con vídeos que sean tuyos o que tengas permiso para usar. Convertir a MP3 una canción para uso personal es habitual, pero compartirla o subirla a otra web puede infringir los derechos de autor.</p>
+
+  <h2>Privacidad</h2>
+  <p>La conversión se hace con WebCodecs, el sistema de audio y vídeo de tu navegador, y con la librería libre Mediabunny (el codificador MP3 se basa en LAME). Tu archivo no sale de tu dispositivo.</p>
+</ToolPage>

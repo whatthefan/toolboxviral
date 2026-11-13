@@ -1,0 +1,53 @@
+---
+import ToolPage from '../layouts/ToolPage.astro'
+import ComprimirVideo from '../components/tools/ComprimirVideo.jsx'
+
+const faq = [
+  ['¿Se sube mi vídeo a algún servidor?', 'No. El vídeo se comprime dentro de tu navegador con el codificador de vídeo de tu propio dispositivo. Nadie más lo ve, y por eso funciona igual de rápido aunque el vídeo pese varios gigas.'],
+  ['¿Cuánto se pierde de calidad?', 'Depende de cuánto lo reduzcas. Para que quepa en el tamaño que eliges, la herramienta reparte el espacio entre imagen y sonido y baja la resolución solo cuando hace falta (de 4K a 1080p, 720p o 480p), porque un vídeo más pequeño con buena imagen se ve mejor que uno grande borroso.'],
+  ['¿Cuál es el límite de WhatsApp, Discord y el correo?', 'Discord deja enviar archivos de hasta 10 MB sin Nitro. Gmail y Outlook admiten adjuntos de unos 20 a 25 MB. WhatsApp envía vídeos como vídeo hasta un tamaño moderado y los recomprime él mismo; si lo reduces antes, controlas tú la calidad. Como documento, WhatsApp admite hasta 2 GB.'],
+  ['¿En qué formato se guarda?', 'En MP4 con vídeo H.264 y sonido AAC, el formato que acepta todo: WhatsApp, Instagram, TikTok, YouTube, Discord y cualquier móvil. Solo si tu navegador no puede crear MP4 (algunas versiones de Firefox) se guarda en WebM.'],
+  ['¿Funciona en el móvil?', 'Sí, en Chrome para Android y en Safari para iPhone actualizados. Los vídeos largos tardan más en el móvil que en el ordenador.'],
+  ['¿Puedo comprimir un vídeo de iPhone (MOV o HEVC)?', 'Sí, si tu navegador puede reproducirlo. Safari abre los vídeos HEVC del iPhone; en Chrome para Windows depende de que el sistema tenga el códec HEVC.'],
+  ['¿Hay límite de tamaño o de vídeos?', 'No hay límite de vídeos ni marca de agua. El único límite es la memoria de tu dispositivo: el vídeo comprimido se crea en memoria antes de descargarlo.'],
+]
+---
+<ToolPage
+  title="Comprimir vídeo gratis para WhatsApp, Discord o correo – ToolBoxViral"
+  description="Reduce el peso de un vídeo sin subirlo a ningún servidor. Elige el tamaño (10 MB para Discord, 25 MB para el correo…) y descarga un MP4. Gratis, sin marca de agua y sin límite."
+  h1="Comprimir vídeo"
+  intro="Elige para qué lo quieres y el vídeo se reduce justo hasta ese tamaño, con la mejor calidad posible. Se hace en tu dispositivo: sin subirlo, sin marca de agua y sin límite de vídeos."
+  faq={faq}
+>
+  <ComprimirVideo slot="calc" client:only="react" />
+
+  <h2>Cómo comprimir un vídeo</h2>
+  <ol>
+    <li>Arrastra tu vídeo al recuadro o haz clic para elegirlo (MP4, MOV, WebM, MKV…).</li>
+    <li>Elige el destino: Discord (10 MB), correo (25 MB), WhatsApp, la mitad del peso u otro tamaño.</li>
+    <li>Si no necesitas el sonido, márcalo para quitarlo: así queda más espacio para la imagen.</li>
+    <li>Pulsa <strong>Comprimir vídeo</strong>, mira el resultado en el reproductor y descárgalo.</li>
+  </ol>
+
+  <h2>Cómo decide la calidad</h2>
+  <p>El peso de un vídeo depende de su duración y de su <strong>bitrate</strong>, es decir, de cuántos datos usa por segundo. Para que un vídeo quepa en un tamaño, la herramienta calcula el bitrate que le toca y deja un pequeño margen.</p>
+  <p>Después elige la resolución. Con poco bitrate, un vídeo en 1080p se ve lleno de cuadraditos, así que baja a 720p o 480p, donde ese bitrate se ve limpio. Si el vídeo es vertical, como los de TikTok o Reels, respeta la orientación.</p>
+  <ul>
+    <li>Más de 4 Mbps de imagen: hasta 1080p.</li>
+    <li>Entre 1,8 y 4 Mbps: 720p.</li>
+    <li>Entre 0,8 y 1,8 Mbps: 480p.</li>
+    <li>Menos de 0,8 Mbps: 360p o menos.</li>
+  </ul>
+  <p>Si el vídeo dura mucho para el tamaño que pides, te avisa de cuál es el mínimo razonable en lugar de darte un vídeo que no se ve.</p>
+
+  <h2>Trucos para que pese menos</h2>
+  <ul>
+    <li>Recorta el principio y el final antes de comprimir: cada segundo cuenta.</li>
+    <li>Quita el sonido si es un vídeo de pantalla o un clip sin voz.</li>
+    <li>Para mandar un vídeo largo sin perder calidad, mejor un enlace de Google Drive o WeTransfer que comprimirlo mucho.</li>
+    <li>Si quieres solo el audio, usa el conversor de <a href="/video-a-mp3">vídeo a MP3</a>: pesa diez veces menos.</li>
+  </ul>
+
+  <h2>Privacidad</h2>
+  <p>La compresión usa WebCodecs, el codificador de vídeo que traen Chrome, Edge y Safari, a través de la librería libre Mediabunny. Tu vídeo no sale de tu dispositivo en ningún momento: puedes comprobarlo desconectando internet una vez abierta la página.</p>
+</ToolPage>

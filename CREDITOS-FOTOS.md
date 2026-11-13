@@ -11,7 +11,7 @@ Fotos de [Unsplash](https://unsplash.com) (Licencia Unsplash: uso libre, tambié
 - public/img/generador-qr.webp: https://images.unsplash.com/photo-1595079676339-1534801ad6cf
 - public/img/generador-de-contrasenas.webp: https://images.unsplash.com/photo-1614064641938-3bbee52942c7
 
-- public/img/subtitulos-automaticos.webp: ilustración propia (generada con código).
+- public/img/subtitulos-automaticos.webp, comprimir-video.webp y video-a-mp3.webp: ilustraciones propias (generadas con código).
 
 ## Vídeo de la portada
 
